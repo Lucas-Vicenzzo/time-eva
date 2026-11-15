@@ -99,9 +99,9 @@ const EN = {
   "Modo sala de aula":"Classroom mode",
   "O professor projeta o globo, lança uma pergunta e a turma aposta antes de ver o resultado. Depois todos investigam juntos o porquê.":
     "The teacher projects the globe, poses a question and the class bets before seeing the result. Then everyone investigates why, together.",
-  "Sem celular? Sem problema":"No phones? No problem",
-  "Cartões de votação coloridos permitem que a turma inteira participe só com o projetor do professor.":
-    "Colored voting cards let the whole class take part using only the teacher's projector.",
+  "Da observação à investigação":"From observation to investigation",
+  "Compare os dados e pergunte à EVA o que pode explicar as mudanças. Use as possibilidades como ponto de partida para investigar com a turma.":
+    "Compare the data and ask EVA what could explain the changes. Use these possibilities as a starting point for a class investigation.",
   "Feito para quem aprende,":"Built for those who learn,","quem ensina e quem decide":"teach and decide",
   "O E.V.A atende três perfis dentro da mesma escola: o aluno que investiga, o professor que conduz a aula e a gestão que escolhe a ferramenta.":
     "E.V.A serves three profiles in the same school: the student who investigates, the teacher who leads the class and the management that chooses the tool.",
@@ -114,7 +114,7 @@ const EN = {
   "Quem aplica":"Who applies it","Professores":"Teachers",
   "De Ciências da Natureza, Geografia, Matemática e tecnologia, que precisam de atividades com dados reais sem horas de preparação.":
     "Science, Geography, Math and technology teachers who need real-data activities without hours of preparation.",
-  "Modo projetor pronto para a aula":"Projector mode ready for class","Funciona sem celular, com cartões de votação":"Works without phones, using voting cards",
+  "Modo projetor pronto para a aula":"Projector mode ready for class","Dados e gráficos para discutir com a turma":"Data and charts for class discussions",
   "Conecta com projetos sobre os ODS":"Connects with SDG projects",
   "Quem decide":"Who decides","Gestores e redes de ensino":"School leaders and school networks",
   "Direções de escolas públicas e privadas e secretarias de educação que buscam aprendizagem ativa e inovação com baixo custo.":
