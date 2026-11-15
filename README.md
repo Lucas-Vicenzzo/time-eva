@@ -6,6 +6,8 @@ Interactive climate exploration for the classroom, with a satellite-textured 3D 
 
 **Start the demo:** https://evaclassroom.vercel.app/demo/
 
+**Interactive student join preview:** `/demo/join/` — tap or focus each field to fill example values, enter a simulated waiting room, then choose an answer when the quiz question appears. It does not submit data or create a real classroom.
+
 ## Run locally
 
 Requires Node.js 22 and npm.
