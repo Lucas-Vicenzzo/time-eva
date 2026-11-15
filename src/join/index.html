@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EVA Classroom · Entrando na sala</title>
+  <link rel="icon" href="/assets/eva-symbol.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/demo/join/join.css">
+  <script src="/demo/join/join.js" defer></script>
+</head>
+<body>
+  <main class="demo" aria-label="Demonstração da entrada em uma sala EVA Classroom">
+    <p class="caption"><span></span> Demonstração interativa</p>
+    <section class="phone" aria-label="Prévia do celular do estudante">
+      <div class="screen">
+        <header class="phone-top"><span>EVA Classroom</span><span id="screen-label">Entrar</span></header>
+        <div class="join-screen" id="join-screen">
+          <img class="mascot" src="/assets/eva-symbol.svg" alt="EVA, nossa mascote" width="68" height="68">
+          <h1>Entre na aula<br>ao vivo.</h1>
+          <p class="intro">Toque nos campos para preencher o exemplo.</p>
+          <div class="fields" aria-label="Preenchimento dos dados de exemplo">
+            <label class="field" id="code-field"><span>Código da sala</span><input id="room-code" aria-label="Código da sala" placeholder="Ex.: K7Q24" readonly autocomplete="off"></label>
+            <label class="field" id="name-field"><span>Nome da equipe</span><input id="team-name" aria-label="Nome da equipe" placeholder="Como sua equipe se chama?" readonly autocomplete="off"></label>
+          </div>
+          <div class="join-action">
+            <button id="join-button" class="join-button" type="button" disabled>Entrar na sala <span aria-hidden="true">→</span></button>
+          </div>
+          <p class="privacy">Sem conta, sem e-mail.<br>Só a curiosidade de explorar.</p>
+        </div>
+        <div class="room-screen" id="room-screen" hidden>
+          <div class="connected"><span aria-hidden="true">✓</span> Equipe conectada</div>
+          <img class="room-mascot" src="/assets/eva-symbol.svg" alt="" width="88" height="88">
+          <h2>Vocês estão<br>dentro!</h2>
+          <p class="room-intro">A próxima descoberta<br>começa com a sua equipe.</p>
+          <div class="room-card"><span class="label">Sala de aula</span><strong>K7Q24</strong><div class="team"><span class="avatar" aria-hidden="true">C</span><span><small>Sua equipe</small><b>Capivaras</b></span><span class="ready" aria-label="Pronta">✓</span></div></div>
+          <div class="waiting"><span class="waiting-dots" aria-hidden="true"><i></i><i></i><i></i></span><p>Aguardando o professor<br>começar a investigação.</p></div>
+        </div>
+        <div class="question-screen" id="question-screen" hidden>
+          <div class="question-meta"><span>Pergunta da aula</span><span class="question-team">Capivaras</span></div>
+          <h2 id="question-title" tabindex="-1">O que o AIRS mede<br>nesta visualização?</h2>
+          <p class="question-intro">Escolha uma resposta.</p>
+          <div class="answers" role="group" aria-label="Alternativas da pergunta demonstrativa">
+            <button type="button" data-answer="A" aria-pressed="false"><span class="answer-letter">A</span><span>Índice de vegetação (NDVI)</span><span class="answer-check" aria-hidden="true">✓</span></button>
+            <button type="button" data-answer="B" aria-pressed="false"><span class="answer-letter">B</span><span>Temperatura do ar<br>na superfície</span><span class="answer-check" aria-hidden="true">✓</span></button>
+            <button type="button" data-answer="C" aria-pressed="false"><span class="answer-letter">C</span><span>Área de floresta</span><span class="answer-check" aria-hidden="true">✓</span></button>
+            <button type="button" data-answer="D" aria-pressed="false"><span class="answer-letter">D</span><span>Aumento desde 1981</span><span class="answer-check" aria-hidden="true">✓</span></button>
+          </div>
+          <div class="answer-status" id="answer-status" hidden><span aria-hidden="true">✓</span><div><strong>Resposta enviada!</strong><p>Aguarde a turma terminar.</p></div></div>
+        </div>
+        <div class="home-indicator" aria-hidden="true"></div>
+      </div>
+    </section>
+    <div class="demo-controls"><p id="demo-status" role="status" aria-live="polite">Toque nos campos para preencher os exemplos.</p><button id="replay" type="button">↻ Reiniciar demo</button></div>
+    <noscript><p>Esta demonstração precisa de JavaScript para simular a entrada e responder à pergunta.</p></noscript>
+  </main>
+</body>
+</html>

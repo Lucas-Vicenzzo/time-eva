@@ -31,6 +31,7 @@ function build() {
   fs.writeFileSync(path.join(root, 'dist/demo/index.html'), html);
   fs.writeFileSync(path.join(root, 'dist/index.html'), fs.readFileSync(path.join(src, 'landing/index.html'), 'utf8').replace('<!--__DEMO_LOADING__-->', () => loading));
   fs.copyFileSync(path.join(src, 'data/earthdata-demo.json'), path.join(root, 'dist/earthdata-demo.json'));
+  fs.cpSync(path.join(src, 'join'), path.join(root, 'dist/demo/join'), { recursive: true });
   fs.cpSync(path.join(src, 'assets'), path.join(root, 'dist/assets'), { recursive: true });
   console.log(`✓ landing + dist/demo/index.html (${(html.length / 1024).toFixed(0)} KB) em ${Date.now() - t0} ms`);
 }

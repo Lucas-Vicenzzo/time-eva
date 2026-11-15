@@ -5,6 +5,7 @@ import path from 'node:path';
 import handler from '../api/eva.js';
 import climateHandler from '../api/climate.js';
 const root = path.resolve('dist');
+const pages = {'/':'/index.html','/demo':'/demo/index.html','/demo/':'/demo/index.html','/demo/join':'/demo/join/index.html','/demo/join/':'/demo/join/index.html'};
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.png':'image/png', '.svg':'image/svg+xml', '.jpg':'image/jpeg', '.webp':'image/webp' };
 http.createServer(async (req, res) => {
   const route=req.url.split('?')[0];
@@ -21,7 +22,7 @@ http.createServer(async (req, res) => {
   }
   try {
     const url = new URL(req.url, 'http://localhost');
-    const file = path.resolve(root, '.' + decodeURIComponent(url.pathname === '/' ? '/index.html' : ['/demo','/demo/'].includes(url.pathname) ? '/demo/index.html' : url.pathname));
+    const file = path.resolve(root, '.' + decodeURIComponent(pages[url.pathname] || url.pathname));
     if (!file.startsWith(root + path.sep)) { res.writeHead(403).end(); return; }
     const bytes = await fs.readFile(file);
     res.writeHead(200, { 'Content-Type': types[path.extname(file)] || 'application/octet-stream' });

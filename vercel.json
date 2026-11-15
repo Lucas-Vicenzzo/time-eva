@@ -4,6 +4,14 @@
   "installCommand": "npm install",
   "rewrites": [
     {
+      "source": "/demo/join",
+      "destination": "/demo/join/index.html"
+    },
+    {
+      "source": "/demo/join/",
+      "destination": "/demo/join/index.html"
+    },
+    {
       "source": "/demo",
       "destination": "/demo/index.html"
     },
