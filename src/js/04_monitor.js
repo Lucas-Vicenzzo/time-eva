@@ -1,6 +1,6 @@
 /* The approved shell, earth mesh, materials and mascot stay intact. Only observations change. */
 let VIEW='monitor',ROLE='teacher',VAR='T2M',region='brasil',year=2025,merraMetric='RX1Day',selectedObservation=null;
-let dataMode='history',historySite=HISTORY.sites[0],historyLoading=false,historyRequest=0,cloudTransition=null;
+let dataMode='history',historySite=HISTORY.sites.find(site=>site.id==='amazon')||HISTORY.sites[0],historyLoading=false,historyRequest=0,cloudTransition=null;
 const VARS={
  T2M:{get name(){return tx('Temperatura','Temperature');},short:'Temp',color:'#FFAE38',icon:'<path d="M12 3a2 2 0 0 0-2 2v8.5a4 4 0 1 0 4 0V5a2 2 0 0 0-2-2z"/><path d="M12 14v3"/>'},
  PREC:{get name(){return tx('Chuva','Rainfall');},short:'MERRA-2',color:'#309CEC',icon:'<path d="M7 15a4 4 0 0 1-.5-8A5.5 5.5 0 0 1 17 7.5a3.8 3.8 0 0 1 .5 7.5"/><path d="M8 18l-1 3M12 18l-1 3M16 18l-1 3"/>'},

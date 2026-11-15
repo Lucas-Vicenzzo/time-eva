@@ -27,7 +27,8 @@
 .response-origin{display:block;margin-bottom:6px;font:500 10px Poppins,sans-serif;color:#346981}#estat{line-height:1.4}
 
 /* Keep longer EVA explanations in their panel without pushing tips into the card above. */
-.insight .tips{display:none}
+.insight .tips{flex:1 0 auto;min-height:min-content}
+.insight .tip{flex-shrink:0;line-height:1.5}
 .mon>.rcol{overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#b7d0df transparent;padding:6px;margin:-6px}
 .mon>.rcol>.live{flex-shrink:0}
 .mon>.rcol>.insight{flex:1 0 auto;justify-content:flex-start}
