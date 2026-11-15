@@ -45,7 +45,7 @@ function drawHistoryChart(id){
  const X=y=>l+(y-HISTORY.start)/(HISTORY.end-HISTORY.start)*w,Y=v=>top+(hi-v)/(hi-lo)*h;
  x.font='10px Poppins';x.fillStyle='#526071';x.textAlign='left';x.fillText(m.label[LANG]+' · '+m.unit,l,12);
  for(let i=0;i<4;i++){const v=lo+(hi-lo)*i/3;x.strokeStyle='#e8edf3';x.beginPath();x.moveTo(l,Y(v));x.lineTo(l+w,Y(v));x.stroke();x.textAlign='right';x.fillText(nf(v,1),l-5,Y(v)+3);}
- x.textAlign='center';[1981,1990,2000,2010,2020,2025].forEach(y=>{x.textAlign=y===1981?'left':y===2025?'right':'center';x.fillText(String(y),X(y),H-6);});
+ x.textAlign='center';historyTicks().forEach(y=>{x.textAlign=y===HISTORY.start?'left':y===HISTORY.end?'right':'center';x.fillText(String(y),X(y),H-6);});
  x.beginPath();let previousYear=null;for(const p of series){if(previousYear===null||p.year!==previousYear+1)x.moveTo(X(p.year),Y(p.value));else x.lineTo(X(p.year),Y(p.value));previousYear=p.year;}x.strokeStyle=VARS[VAR].color;x.lineWidth=2.5;x.lineJoin='round';x.stroke();
  const slope=seriesTrend(series),mx=series.reduce((a,p)=>a+p.year,0)/series.length,my=series.reduce((a,p)=>a+p.value,0)/series.length;
  x.setLineDash([4,4]);x.lineWidth=1;x.strokeStyle='#65788a';x.beginPath();x.moveTo(X(series[0].year),Y(my+slope*(series[0].year-mx)));x.lineTo(X(series.at(-1).year),Y(my+slope*(series.at(-1).year-mx)));x.stroke();x.setLineDash([]);
@@ -60,7 +60,7 @@ function configureTimeline(){
  slider.setAttribute('aria-label',enabled?tx('Ano das observações','Observation year'):tx('Sem série histórica neste arquivo','No historical series for this file'));
  const percent=enabled?(year-HISTORY.start)/(HISTORY.end-HISTORY.start)*100:100;
  document.querySelector('#trk .fill').style.width=percent+'%';document.querySelector('#trk .knob').style.left=percent+'%';
- document.querySelectorAll('#trk .tk').forEach(e=>e.remove());[1981,1990,2000,2010,2020,2025].forEach(y=>{const label=document.createElement('span');label.className='tk';label.textContent=y;label.style.left=(y-HISTORY.start)/(HISTORY.end-HISTORY.start)*100+'%';$('trk').appendChild(label);});
+ document.querySelectorAll('#trk .tk').forEach(e=>e.remove());historyTicks().forEach(y=>{const label=document.createElement('span');label.className='tk';label.textContent=y;label.style.left=(y-HISTORY.start)/(HISTORY.end-HISTORY.start)*100+'%';$('trk').appendChild(label);});
  $('tl').classList.toggle('timeline-unavailable',!enabled);$('tl').setAttribute('aria-label',enabled?tx('Timeline · NASA POWER · médias anuais','Timeline · NASA POWER · annual means'):tx('Este arquivo cobre apenas '+dateLabel(),'This file covers only '+dateLabel()));
 }
 function focusHistorySite(id){const site=HISTORY.sites.find(s=>s.id===id);if(!site)return;historyRequest++;historyLoading=false;historySite=site;hist.length=0;render();flyRegion();showLocationInsight();setEvaMood('investigative');}

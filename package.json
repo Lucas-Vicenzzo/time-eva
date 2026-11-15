@@ -6,6 +6,8 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
+    "data:refresh": "node --env-file-if-exists=.env.local scripts/refresh-data.mjs",
+    "test:data": "python3 -m unittest discover -s tests -p 'test_*.py'",
     "dev": "node scripts/build.mjs --watch",
     "preview": "npx --yes serve dist",
     "start": "node --env-file-if-exists=.env.local scripts/serve.mjs",

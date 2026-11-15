@@ -1,4 +1,4 @@
-import {getClimateSeries,validLocation,linearTrend} from '../lib/climate.mjs';
+import {getClimateSeries,validLocation,linearTrend,historyPeriod} from '../lib/climate.mjs';
 import evidence from '../src/data/earthdata-demo.json' with { type: 'json' };
 
 // The key and factual context stay on the server. No paid fallback is selected.
@@ -23,7 +23,7 @@ export default async function handler(req, res) {
   const isHistory=datasetId==='power-history';
   let context,datasetName;
   if(isHistory){
-    if(!['T2M','PRECTOTCORR'].includes(metricId)||!validLocation(latitude,longitude)||!Number.isInteger(selectedYear)||selectedYear<1981||selectedYear>2025)return res.status(400).json({error:'invalid_history_selection'});
+    if(!['T2M','PRECTOTCORR'].includes(metricId)||!validLocation(latitude,longitude)||!Number.isInteger(selectedYear)||selectedYear<historyPeriod.start||selectedYear>historyPeriod.end)return res.status(400).json({error:'invalid_history_selection'});
     let site;try{site=await getClimateSeries(latitude,longitude);}catch{return res.status(502).json({error:'nasa_unavailable'});}
     const series=site.series[metricId];const first=series[0],last=series.at(-1);
     datasetName='NASA POWER / MERRA-2';
@@ -33,7 +33,7 @@ export default async function handler(req, res) {
     if(!metric)return res.status(400).json({error:'unknown_dataset_or_metric'});
     if((referenceRegion!==undefined&&!Object.hasOwn(metric.regions||{},referenceRegion))||(pointIndex!==undefined&&(!Number.isInteger(pointIndex)||pointIndex<0||pointIndex>=metric.points.length)))return res.status(400).json({error:'invalid_selection'});
     datasetName=dataset.name;
-    context={name:dataset.name,period:dataset.period,coverage:dataset.coverage,source:dataset.source,sourceUrl:dataset.url,sampling:dataset.sampling,variable:metric.label,unit:metric.unit,statistics:metric.stats,regionalGridCells:metric.regions,statisticsScope:dataset.id==='merra2'?'unweighted mean over valid global grid cells':'mean over valid footprints in this single observed swath; NEVER a global mean',sampledPoints:metric.points.length,historicalTrendSupported:false,brazilBoundingBoxPixels:dataset.brazilBoundingBoxPixels,selectedReferenceCell:referenceRegion===undefined?undefined:{name:referenceRegion,...metric.regions[referenceRegion]},selectedObservation:pointIndex===undefined?undefined:{longitude:metric.points[pointIndex][0],latitude:metric.points[pointIndex][1],value:metric.points[pointIndex][2]}};
+    context={name:dataset.name,period:dataset.period,coverage:dataset.coverage,source:dataset.source,sourceUrl:dataset.url,sampling:dataset.sampling,variable:metric.label,unit:metric.unit,statistics:metric.stats,regionalGridCells:metric.regions,statisticsScope:dataset.id==='merra2'?'unweighted mean over valid global grid cells':'mean over valid footprints in this single observed swath; NEVER a global mean',sampledPoints:metric.points.length,historicalTrendSupported:false,brazilBoundingBoxPixels:dataset.brazilBoundingBoxPixels,validBrazilBoundingBoxPixels:dataset.validBrazilBoundingBoxPixels,selectedReferenceCell:referenceRegion===undefined?undefined:{name:referenceRegion,...metric.regions[referenceRegion]},selectedObservation:pointIndex===undefined?undefined:{longitude:metric.points[pointIndex][0],latitude:metric.points[pointIndex][1],value:metric.points[pointIndex][2]}};
   }
   if(!key)return res.status(503).json({error:'gemini_not_configured'});
   context.mapReading='Country fills summarize available displayed samples, NOT national means. The selected location and chart describe one model-grid point or selected footprint. Annual level and historical trend are different views.';
@@ -52,7 +52,7 @@ Only infer a linear historical trend when historicalTrendSupported is true; use 
 When historicalTrendSupported is false, do not infer any historical trend. MERRA-2 regional values are single
 nearest grid cells. Its global means are unweighted grid means, not area-weighted Earth averages.
 Missing heatwave values are missing, not zero. AIRS is a partial swath and is not a vegetation product.
-Sentinel-5P is an ESA/Copernicus product; this supplied swath does not cover Brazil.
+Sentinel-5P is an ESA/Copernicus product distributed here by NASA GES DISC. Determine coverage only from the selected dataset metadata: validBrazilBoundingBoxPixels > 0 indicates valid observations in an approximate bounding box, never coverage of all Brazil; zero means no valid observations there. If that field is absent, brazilBoundingBoxPixels describes footprint overlap only, not valid observations. Never assume a new swath has the same coverage as an older one.
 For AIRS and Sentinel-5P, always call the mean a swath mean, never a global mean.
 No browsing or map control tools are available. Do not claim to change the map.
 Stay on Earth science and these datasets; do not request personal data. State when evidence is insufficient.

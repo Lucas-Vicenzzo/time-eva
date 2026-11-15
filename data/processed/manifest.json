@@ -1,0 +1,40 @@
+{
+  "version": 1,
+  "files": {
+    "G4379179718-GES_DISC": {
+      "collectionId": "C2531963170-GES_DISC",
+      "granuleId": "G4379179718-GES_DISC",
+      "revision": "2026-10-20T04:44:42.000Z",
+      "sourceUrl": "https://data.gesdisc.earthdata.nasa.gov/data/MERRA2_CLIM/M2SMNXEDI.2/2026/MERRA2.statM_2d_edi_Nx.v2_1.202609.nc4",
+      "period": "2026-09-01 / 2026-09-30",
+      "sha256": "69cad750bdc6899d264f9703a529a4b4bd6a32f1984b4fe01a17c3b6f745dbf9",
+      "bytes": 28331067,
+      "processedPath": "data/processed/merra2/2026-09.npz",
+      "processorVersion": 1
+    },
+    "G4412020083-GES_DISC": {
+      "datasetId": "airs",
+      "collectionId": "C1701805630-GES_DISC",
+      "granuleId": "G4412020083-GES_DISC",
+      "revision": "2026-11-14T20:52:14.000Z",
+      "sourceUrl": "https://data.gesdisc.earthdata.nasa.gov/data/Aqua_AIRS_Level2/AIRS2SUP.7.0/2026/318/AIRS.2026.11.14.078.L2.RetSup_IR.v7.0.10.0.G26318154811.hdf",
+      "period": "2026-11-14T07:47:21.000Z / 2026-11-14T07:53:21.000Z",
+      "sha256": "79238283459cd816968cb9f4dd3b80a629d0d7b997ddfe97f97cbc7eac73a04d",
+      "bytes": 25484596,
+      "processedPath": "data/processed/airs/G4412020083-GES_DISC.npz",
+      "processorVersion": 1
+    },
+    "G4412718708-GES_DISC": {
+      "datasetId": "sentinel5p",
+      "collectionId": "C4392196077-GES_DISC",
+      "granuleId": "G4412718708-GES_DISC",
+      "revision": "2026-11-15T14:52:14.000Z",
+      "sourceUrl": "https://data.gesdisc.earthdata.nasa.gov/data/S5P_TROPOMI_Level2/S5P_L2__O3_TOT_HiR.3/2026/315/S5P_OFFL_L2__O3_____20261111T012108_20261111T030238_47041_03_030001_20261113T065237.nc",
+      "period": "2026-11-11T01:42:43.000Z / 2026-11-11T02:41:06.000Z",
+      "sha256": "b872e4e620c2282c3d15bb6cb671ceeabbd7cf1a6f4f6e5740a869222ed24c81",
+      "bytes": 345597875,
+      "processedPath": "data/processed/sentinel5p/G4412718708-GES_DISC.npz",
+      "processorVersion": 1
+    }
+  }
+}

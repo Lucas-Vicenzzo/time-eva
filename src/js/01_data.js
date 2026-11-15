@@ -25,3 +25,15 @@ const P0=0,P1=2;
 const datasetFor=v=>EVIDENCE.datasets.find(d=>d.id===({T2M:'airs',PREC:'merra2',OZONE:'sentinel5p'}[v]));
 const metricFor=(v,merraMetric='RX1Day')=>datasetFor(v).metrics[v==='T2M'?'TSurfAir':v==='OZONE'?'ozone':merraMetric];
 const vunit=m=>m.unit==='days'?tx('dias','days'):m.unit;
+
+function observationDate(variable=VAR){
+ const period=datasetFor(variable).period;
+ const start=period.split(' / ')[0];
+ return new Intl.DateTimeFormat(LANG==='pt'?'pt-BR':'en-US',{day:datasetFor(variable).id==='merra2'?undefined:'numeric',month:'short',year:'numeric',timeZone:'UTC'}).format(new Date(start));
+}
+function historyTicks(){
+ const ticks=[HISTORY.start];
+ for(let y=Math.ceil((HISTORY.start+1)/10)*10;y<HISTORY.end;y+=10)ticks.push(y);
+ if(HISTORY.end!==HISTORY.start)ticks.push(HISTORY.end);
+ return ticks;
+}
