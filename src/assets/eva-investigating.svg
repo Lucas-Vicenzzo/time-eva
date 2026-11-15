@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><defs><g id="eva-body">
+  <defs>
+    <linearGradient id="evaBodyGradient" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#66DE9A"/>
+      <stop offset="0.34" stop-color="#32D2C0"/>
+      <stop offset="0.70" stop-color="#16B8EC"/>
+      <stop offset="1" stop-color="#087CF6"/>
+    </linearGradient>
+    <linearGradient id="evaLeftLeaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60CF3D"/>
+      <stop offset="1" stop-color="#44BC39"/>
+    </linearGradient>
+    <linearGradient id="evaRightLeaf" x1="0.2" y1="1" x2="0.8" y2="0">
+      <stop offset="0" stop-color="#7DDC44"/>
+      <stop offset="1" stop-color="#A6EC3B"/>
+    </linearGradient>
+  </defs>
+  <!-- Leaves and the sprout meet the rounded body seamlessly. -->
+  <path d="M256 121 C245 97 228 92 208 89 C183 85 167 72 166 53 C165 34 181 24 203 28 C233 33 254 56 261 86 C264 100 262 114 256 121Z" fill="url(#evaLeftLeaf)"/>
+  <path d="M252 126 C245 106 252 79 268 56 C288 27 318 17 342 22 C366 27 373 49 363 71 C351 98 322 105 293 107 C270 109 257 118 252 126Z" fill="url(#evaRightLeaf)"/>
+  <path d="M256 109 C256 129 244 133 231 137 C136 149 67 227 67 320 C67 426 152 489 256 489 C360 489 445 426 445 320 C445 227 376 149 281 137 C268 133 256 129 256 109Z" fill="url(#evaBodyGradient)"/>
+</g><symbol id="eva-investigative" viewBox="0 0 512 512"><use href="#eva-body"/><g class="eva-arms"><ellipse cx="129" cy="349" rx="32" ry="55" fill="url(#evaBodyGradient)" transform="rotate(-32 129 349)"/><ellipse cx="383" cy="335" rx="32" ry="55" fill="url(#evaBodyGradient)" transform="rotate(32 383 335)"/></g><g class="eva-face"><path d="M196 255Q216 266 237 251" fill="none" stroke="#FFF0CF" stroke-width="11" stroke-linecap="round"/><ellipse cx="219" cy="277" rx="12" ry="22" fill="#FFF0CF"/><ellipse cx="294" cy="263" rx="15" ry="28" fill="#FFF0CF"/><path d="M331 318L353 376" stroke="#17365b" stroke-width="20" stroke-linecap="round"/><circle cx="299" cy="266" r="55" fill="#72dce8" fill-opacity=".25" stroke="#17365b" stroke-width="13"/><path d="M287 224Q319 224 335 254" stroke="white" stroke-width="9" stroke-linecap="round" fill="none"/></g></symbol></defs><use href="#eva-investigative"/></svg>

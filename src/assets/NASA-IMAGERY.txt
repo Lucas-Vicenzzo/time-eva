@@ -1,0 +1,12 @@
+EVA Classroom satellite base
+
+NASA Blue Marble (2002), land surface, ocean color and sea ice.
+Global equirectangular composite, 2048 × 1024. Downloaded without modification.
+Land/coastal observations: June–September 2001; composite released in 2002.
+This is a fixed geographic background, not live imagery or an annual climate layer.
+
+Image:
+https://assets.science.nasa.gov/content/dam/science/esd/eo/content-feature/bluemarble/images/land_ocean_ice_2048.jpg
+Source and credits:
+https://science.nasa.gov/earth/earth-observatory/the-blue-marble-true-color-global-imagery-at-1km-resolution/
+NASA Goddard Space Flight Center. Image: Reto Stöckli. Enhancements: Robert Simmon.

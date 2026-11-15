@@ -1,0 +1,6 @@
+NASA Data/
+node_modules/
+dist/
+.venv/
+.env*
+tests/

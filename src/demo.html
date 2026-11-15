@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#309cec">
+  <meta name="description" content="Explore observações reais de MERRA-2, AIRS e Sentinel-5P com a EVA.">
+  <title>EVAdence — Explore a evidência</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/demo.css">
+</head>
+<body>
+  <a class="skip" href="#main">Ir para os dados / Skip to data</a>
+  <header class="header">
+    <a class="brand" href="/" aria-label="EVAdence"><svg viewBox="0 0 120 140" aria-hidden="true"><use href="#botSym"/></svg><span>EVA<b>dence</b></span></a>
+    <span class="header-note" data-i18n="tagline"></span>
+    <label class="language"><span data-i18n="language"></span><select id="language" aria-label="Idioma / Language"><option value="pt">Português</option><option value="en">English</option></select></label>
+  </header>
+  <main id="main">
+    <section class="intro"><div><h1 data-i18n="title"></h1><p data-i18n="subtitle"></p></div><div class="verified"><span class="dot"></span><span data-i18n="verified"></span></div></section>
+    <nav class="datasets" aria-label="Conjuntos de dados / Datasets" id="datasets"></nav>
+    <div class="workspace">
+      <section class="observations" aria-labelledby="dataset-title">
+        <div class="panel-head"><div><h2 id="dataset-title"></h2><p id="period"></p></div><a id="source" target="_blank" rel="noopener" data-i18n="source"></a></div>
+        <div class="metrics" id="metrics" aria-label="Variáveis / Variables"></div>
+        <div class="map-wrap"><canvas id="map" role="img" aria-label="Mapa das observações / Observation map"></canvas><div class="map-hint" data-i18n="mapHint"></div></div>
+        <div class="legend"><span id="legend-min"></span><div class="ramp"></div><span id="legend-max"></span><span id="map-unit"></span></div>
+        <p id="point-readout" class="readout" aria-live="polite"></p>
+        <div class="summary" id="summary"></div>
+        <p id="sampling" class="caption"></p>
+      </section>
+      <aside class="eva-panel" aria-labelledby="eva-title">
+        <div class="eva-head"><svg viewBox="0 0 120 140" aria-hidden="true"><use href="#botSym"/></svg><div><h2 id="eva-title" data-i18n="evaTitle"></h2><p id="ai-status" role="status"></p></div></div>
+        <div class="chat" id="chat" role="log" aria-live="polite" aria-label="Conversa com EVA / EVA conversation"></div>
+        <div class="suggestions" id="suggestions"></div>
+        <form id="ask-form"><label class="sr-only" for="question" data-i18n="questionLabel"></label><textarea id="question" rows="2" maxlength="1000" required></textarea><button type="submit" id="send" data-i18n="send"></button></form>
+        <p class="privacy" data-i18n="privacy"></p>
+      </aside>
+    </div>
+    <section class="details"><div><h2 data-i18n="detailTitle"></h2><p data-i18n="detailIntro"></p><div id="regions"></div></div><div class="limits"><h2 data-i18n="limitsTitle"></h2><p id="limitations"></p><p data-i18n="trendLimit"></p><a href="/earthdata-demo.json" download data-i18n="download"></a></div></section>
+    <footer><span data-i18n="footer"></span><span>MERRA-2 · AIRS / Aqua · Copernicus Sentinel-5P</span></footer>
+  </main>
+  <!--__SYMBOLS__-->
+  <script src="/demo.js" type="module"></script>
+</body>
+</html>

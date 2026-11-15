@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="EVA mascot symbol">
+  <defs>
+    <linearGradient id="body" x1="0" y1="0" x2="0.15" y2="1">
+      <stop offset="0" stop-color="#66DE9A"/>
+      <stop offset="0.34" stop-color="#32D2C0"/>
+      <stop offset="0.70" stop-color="#16B8EC"/>
+      <stop offset="1" stop-color="#087CF6"/>
+    </linearGradient>
+    <linearGradient id="leftLeaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#60CF3D"/>
+      <stop offset="1" stop-color="#44BC39"/>
+    </linearGradient>
+    <linearGradient id="rightLeaf" x1="0.2" y1="1" x2="0.8" y2="0">
+      <stop offset="0" stop-color="#7DDC44"/>
+      <stop offset="1" stop-color="#A6EC3B"/>
+    </linearGradient>
+  </defs>
+  <!-- Leaves and the sprout meet the rounded body seamlessly. -->
+  <path d="M256 121 C245 97 228 92 208 89 C183 85 167 72 166 53 C165 34 181 24 203 28 C233 33 254 56 261 86 C264 100 262 114 256 121Z" fill="url(#leftLeaf)"/>
+  <path d="M252 126 C245 106 252 79 268 56 C288 27 318 17 342 22 C366 27 373 49 363 71 C351 98 322 105 293 107 C270 109 257 118 252 126Z" fill="url(#rightLeaf)"/>
+  <path d="M256 109 C256 129 244 133 231 137 C136 149 67 227 67 320 C67 426 152 489 256 489 C360 489 445 426 445 320 C445 227 376 149 281 137 C268 133 256 129 256 109Z" fill="url(#body)"/>
+  <!-- Character's original two ivory eyes, simplified for small-scale readability. -->
+  <rect x="203" y="244" width="29" height="56" rx="14.5" fill="#FFF0CF" transform="rotate(-17 217.5 272)"/>
+  <rect x="275" y="231" width="29" height="56" rx="14.5" fill="#FFF0CF" transform="rotate(-17 289.5 259)"/>
+</svg>
