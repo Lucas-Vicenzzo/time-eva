@@ -71,8 +71,10 @@ def data_url(granule, extensions=('.nc4',)):
 def download(url, target, token):
     for attempt in range(3):
         try:
-            with urlopen(Request(url, headers={'Authorization': 'Bearer ' + token,
-                        'User-Agent': 'EVA-Classroom/1.0'}), timeout=120) as response, open(target, 'wb') as out:
+            request = Request(url, headers={'User-Agent': 'EVA-Classroom/1.0'})
+            # Redirects use signed URLs, not the original Earthdata bearer token.
+            request.add_unredirected_header('Authorization', 'Bearer ' + token)
+            with urlopen(request, timeout=120) as response, open(target, 'wb') as out:
                 expected = response.headers.get('Content-Length')
                 shutil.copyfileobj(response, out, length=1024 * 1024)
             if not target.stat().st_size or (expected and target.stat().st_size != int(expected)):
@@ -123,6 +125,7 @@ def process_granule(destination, evidence, manifest, granule, period, collection
     url = data_url(granule, extensions)
     with tempfile.TemporaryDirectory(prefix='eva-earthdata-') as temporary:
         raw = Path(temporary) / ('source' + extensions[0])
+        print(f'Downloading {ident}: {granule_id}', flush=True)
         download(url, raw, token)
         source = 'Earthdata/' + granule['producer_granule_id']
         dataset = extractor(raw, period, destination / relative, source)

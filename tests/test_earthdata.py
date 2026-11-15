@@ -1,4 +1,6 @@
 import importlib.util
+import io
+from urllib.request import HTTPRedirectHandler
 import json
 from pathlib import Path
 import sys
@@ -36,6 +38,22 @@ class EarthdataTests(unittest.TestCase):
         bad['links'][0]['href'] = 'https://other.example/source.nc4'
         with self.assertRaises(ValueError):
             updater.data_url(bad)
+
+    def test_download_does_not_forward_earthdata_token_to_signed_redirect(self):
+        class Response(io.BytesIO):
+            headers = {'Content-Length': '6'}
+        def fetch(request, timeout):
+            self.assertEqual(request.get_header('Authorization'), 'Bearer test-token')
+            redirected = HTTPRedirectHandler().redirect_request(request, None, 302, 'Found', {},
+                'https://distribution.cloudfront.net/source.nc?signature=example')
+            self.assertFalse(redirected.has_header('Authorization'))
+            self.assertEqual(redirected.get_header('User-agent'), 'EVA-Classroom/1.0')
+            return Response(b'netcdf')
+        with tempfile.TemporaryDirectory() as directory:
+            target = Path(directory)/'source.nc'
+            with patch.object(updater, 'urlopen', side_effect=fetch), patch.object(updater.time, 'sleep'):
+                updater.download('https://data.gesdisc.earthdata.nasa.gov/source.nc', target, 'test-token')
+            self.assertEqual(target.read_bytes(), b'netcdf')
 
     def test_catalog_reads_all_pages(self):
         class Response:
