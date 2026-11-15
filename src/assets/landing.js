@@ -39,7 +39,7 @@ function applyLanguage(lang){
  document.querySelectorAll('[data-l]').forEach(b=>{b.classList.toggle('on',b.dataset.l===lang);b.setAttribute('aria-pressed',String(b.dataset.l===lang));});
  try{localStorage.setItem('eva-language',lang);}catch{}
 }
-let language='pt';try{language=localStorage.getItem('eva-language')==='en'?'en':'pt';}catch{}
+let language='en';try{language=localStorage.getItem('eva-language')==='pt'?'pt':'en';}catch{}
 document.querySelectorAll('[data-l]').forEach(button=>button.onclick=()=>applyLanguage(button.dataset.l));applyLanguage(language);
 // Geographic preview only; the real annual data and interactive layers load in /demo/.
 (()=>{

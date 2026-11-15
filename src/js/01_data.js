@@ -5,8 +5,8 @@ const $=id=>document.getElementById(id);
 const EVIDENCE=/*__EVIDENCE__*/;
 const HISTORY=/*__HISTORY__*/;
 const reducedMotion=matchMedia('(prefers-reduced-motion: reduce)');
-let LANG='pt';
-try{LANG=localStorage.getItem('eva-language')==='en'?'en':'pt';}catch{}
+let LANG='en';
+try{LANG=localStorage.getItem('eva-language')==='pt'?'pt':'en';}catch{}
 const tx=(pt,en)=>LANG==='pt'?pt:en;
 const nf=(v,d=1)=>v==null?'—':new Intl.NumberFormat(LANG==='pt'?'pt-BR':'en-US',{maximumFractionDigits:d}).format(v);
 const fmtn=(v,d=1)=>nf(v,d);
