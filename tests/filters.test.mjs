@@ -8,7 +8,7 @@ const trendSource=fs.readFileSync('src/js/04b_history.js','utf8').match(/functio
 function context(parameter,filter,year){
  const sites=history.sites.filter(s=>s.series[parameter].some(p=>p.year===year));
  const m={unit:parameter==='T2M'?'°C':'mm/day',sites,points:sites.map(s=>[s.longitude,s.latitude,s.series[parameter].find(p=>p.year===year).value]),colorValues:sites.map(s=>{const base=s.series[parameter].filter(p=>p.year<=2010);return s.series[parameter].find(p=>p.year===year).value-base.reduce((a,p)=>a+p.value,0)/base.length;})};
- const ctx=vm.createContext({dataMode:'history',VAR:parameter==='T2M'?'T2M':'PREC',historyParameter:()=>parameter,tx:p=>p,m,filter});
+ const ctx=vm.createContext({HISTORY:history,dataMode:'history',VAR:parameter==='T2M'?'T2M':'PREC',historyParameter:()=>parameter,tx:p=>p,m,filter});
  vm.runInContext(trendSource+'\n'+source+'\nclimateFilter=filter;result=globeMetric(m);',ctx);return ctx;
 }
 test('trend filters partition real samples and preserve their canonical values',()=>{
@@ -34,5 +34,5 @@ test('surface modes use measured annual levels or real decade slopes without hid
  assert.equal(annual.result.points.length,history.sites.length);assert.ok(annual.result.isLevel);
  annual.result.points.forEach((p,i)=>assert.equal(annual.result.colorValues[i],p[2]));
  assert.equal(trend.result.points.length,history.sites.length);assert.ok(trend.result.trendMode);
- assert.ok(trend.result.colorValues.every(Number.isFinite));assert.ok(trend.result.visualLabel.includes('1981–2025'));
+ assert.ok(trend.result.colorValues.every(Number.isFinite));assert.ok(trend.result.visualLabel.includes(history.start+'–'+history.end));
 });

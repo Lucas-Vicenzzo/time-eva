@@ -1,0 +1,59 @@
+name: Monthly climate data
+run-name: Climate data update - ${{ github.event_name }}
+on:
+  schedule:
+    - cron: '23 6 5 * *'
+  workflow_dispatch:
+permissions:
+  contents: write
+  pull-requests: write
+concurrency:
+  group: monthly-climate-data
+  cancel-in-progress: false
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    env:
+      PYTHONUNBUFFERED: '1'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: npm ci
+      - run: pip install -r scripts/requirements-nasa.txt
+      - name: Prepare isolated candidate
+        env:
+          EARTHDATA_TOKEN: ${{ secrets.EARTHDATA_TOKEN }}
+        run: node scripts/refresh-data.mjs "$RUNNER_TEMP/eva-candidate"
+      - name: Validate candidate with the application
+        run: |
+          cp "$RUNNER_TEMP/eva-candidate/src/data/"*.json src/data/
+          mkdir -p data/processed
+          if [ -d "$RUNNER_TEMP/eva-candidate/data/processed" ]; then
+            cp -R "$RUNNER_TEMP/eva-candidate/data/processed/." data/processed/
+          fi
+          python -m unittest discover -s tests -p 'test_*.py'
+          npm run build
+          npm test
+      - name: Propose validated update
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git add src/data/climate-history.json src/data/earthdata-demo.json data/processed
+          if git diff --cached --quiet; then exit 0; fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          branch="codex/climate-data-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git switch -c "$branch"
+          git commit -m 'Update validated NASA climate observations'
+          git push origin "$branch"
+          printf '%s\n' 'Monthly NASA POWER, MERRA-2, AIRS and Sentinel-5P update. Original downloads were processed in temporary storage and deleted. AIRS and Sentinel-5P remain individual swaths, not monthly averages. Build and automated checks passed. Merge to publish through the configured Vercel integration.' > "$RUNNER_TEMP/data-update-body.md"
+          gh pr create --base "${{ github.event.repository.default_branch }}" --head "$branch" --title 'Monthly climate data update' --body-file "$RUNNER_TEMP/data-update-body.md"
+      - name: Remove candidate
+        if: always()
+        run: rm -rf "$RUNNER_TEMP/eva-candidate"

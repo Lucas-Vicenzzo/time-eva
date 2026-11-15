@@ -55,3 +55,78 @@ The original team landing page has been integrated into `src/landing/`; the team
 ## Vercel
 
 Import this repository, use Node.js 22 and the settings in `vercel.json`, and configure `GEMINI_API_KEY` as a server-side environment variable. The build produces the landing at `/` and the demo at `/demo/`. API routes remain server-side; no API key is embedded in the client build.
+
+## Monthly data updates
+
+The `Monthly climate data` GitHub Actions workflow runs on the fifth day of each
+month at 06:23 UTC (03:23 in São Paulo), or manually with `workflow_dispatch`.
+It requires the repository secret `EARTHDATA_TOKEN` (an Earthdata bearer token
+with access to GES DISC downloads) and permission for GitHub Actions to open pull
+requests. Credentials are never stored in application data.
+
+After this workflow is merged into `main`, run it manually from GitHub:
+**Actions → Monthly climate data → Run workflow → main → Run workflow**.
+The equivalent GitHub CLI command is:
+
+```sh
+gh workflow run monthly-data.yml --ref main
+gh run list --workflow monthly-data.yml
+gh run watch RUN_ID
+```
+
+Open a run to follow each step and its logs. A successful run with changed data
+opens a pull request; a run without changes does not create a commit or pull request.
+
+Automated sources are NASA POWER annual histories, MERRA-2 `M2SMNXEDI`
+version 2 monthly extreme indices, AIRS `AIRS2SUP` version 7.0 surface air
+temperature and Sentinel-5P `S5P_L2__O3_TOT_HiR` version 3 total ozone. All
+Earthdata products are discovered through GES DISC using the same token.
+
+To prepare a candidate locally, install `scripts/requirements-nasa.txt` in a Python
+environment, set `EARTHDATA_TOKEN` in that environment, and run:
+
+```sh
+npm run data:refresh -- /absolute/path/to/empty-candidate-directory
+```
+
+The npm command loads `.env.local` when present; keep `EARTHDATA_TOKEN` there for local runs.
+Set `PYTHON` to the desired Python executable if necessary. The candidate directory
+must be separate from the checkout and empty. The command copies existing datasets,
+refreshes POWER, discovers new or revised MERRA-2 monthly files through all CMR
+result pages, and writes changes only to the candidate. It never publishes or
+modifies the application source datasets. An error makes the candidate unsuitable
+for publication; discard it and retry in an empty directory.
+
+MERRA-2 discovery starts at the existing snapshot (or earliest retained processed
+month). Historical months before that point are not backfilled. Every run checks
+revisions for all retained months. Raw NetCDF downloads exist only in a temporary
+directory and are deleted on success or failure. Full processed metric grids,
+coordinates, units and missing-value masks are retained as compressed NumPy `.npz`
+files under `data/processed/merra2/`. The manifest records source URLs, granule IDs,
+revisions, hashes, periods and processor version. These full grids are excluded
+from the Vercel deployment; display samples keep the existing application format.
+
+POWER retains complete calendar years only and refuses to remove existing annual
+coverage. Identical time series do not cause a rewrite. A monthly check does not
+imply monthly source availability or add a partial year to annual charts.
+
+For AIRS and Sentinel-5P, each monthly run selects the latest completed available
+swath without replacing a newer local observation with an older catalog result.
+Previously processed swaths are checked for revisions. This preserves the app's
+single-swath view: these are individual passes, not monthly/global averages or a
+download of every pass during the month. Full processed arrays, coordinates, quality
+flags and validity masks are retained under `data/processed/airs/` and
+`data/processed/sentinel5p/`. Raw HDF/NetCDF files are deleted after processing,
+including on failure. Source versions are pinned; changing versions requires
+validation of the parser and quality rules. Sentinel-5P is Copernicus/ESA data
+distributed by NASA GES DISC. The quiz derives its coverage answer from the
+available valid observations inside the approximate Brazil bounding box.
+
+The workflow validates the candidate with the Python processing tests, application
+build and Node tests, then opens a pull request containing only processed data.
+It does not merge or deploy automatically. Merge the validated update to publish
+through the repository's Vercel integration; revert that update to recover the
+previous data. GitHub scheduling is best-effort, not a strict time guarantee.
+
+Run processing checks with `npm run test:data` in the Python environment and
+application checks with `npm run build` followed by `npm test`.

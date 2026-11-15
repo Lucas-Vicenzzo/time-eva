@@ -1,5 +1,5 @@
 /* The approved shell, earth mesh, materials and mascot stay intact. Only observations change. */
-let VIEW='monitor',ROLE='teacher',VAR='T2M',region='brasil',year=2025,merraMetric='RX1Day',selectedObservation=null;
+let VIEW='monitor',ROLE='teacher',VAR='T2M',region='brasil',year=HISTORY.end,merraMetric='RX1Day',selectedObservation=null;
 let dataMode='history',historySite=HISTORY.sites.find(site=>site.id==='amazon')||HISTORY.sites[0],historyLoading=false,historyRequest=0,cloudTransition=null;
 const VARS={
  T2M:{get name(){return tx('Temperatura','Temperature');},short:'Temp',color:'#FFAE38',icon:'<path d="M12 3a2 2 0 0 0-2 2v8.5a4 4 0 1 0 4 0V5a2 2 0 0 0-2-2z"/><path d="M12 14v3"/>'},
@@ -8,7 +8,7 @@ const VARS={
 };
 const activeDataset=()=>dataMode==='history'?historyDataset():datasetFor(VAR),activeMetric=()=>dataMode==='history'?historyMetric():metricFor(VAR,merraMetric);
 const activeValue=()=>dataMode==='history'?historySeries().find(p=>p.year===year)?.value??null:selectedObservation?.value??(VAR==='PREC'&&region!=='brasil'?activeMetric().regions[region].value:activeMetric().stats.mean);
-const dateLabel=()=>dataMode==='history'?String(year):VAR==='PREC'?tx('setembro de 2026','September 2026'):VAR==='T2M'?tx('1º de janeiro de 2026','January 1, 2026'):tx('9 de novembro de 2026','November 9, 2026');
+const dateLabel=()=>dataMode==='history'?String(year):datasetFor(VAR).period;
 const CH={};
 function dataColor(value,m=activeMetric()){
  const range=colorRange(m),raw=(value-range.min)/(range.max-range.min||1);
@@ -28,7 +28,7 @@ function viewMonitor(){
  const d=activeDataset(),m=activeMetric(),V=VARS[VAR],value=activeValue();
  const loc=selectedObservation?tx('Ponto observado','Observed point'):VAR==='PREC'&&region!=='brasil'?rname(region):VAR==='PREC'?tx('Grade global','Global grid'):tx('Faixa observada','Observed swath');
  const tabs=Object.entries(VARS).map(([k,v])=>`<button data-var="${k}" class="${(dataMode==='files'?k==='OZONE':k===VAR)?'on':''}" style="--vc:${v.color}"><svg viewBox="0 0 24 24">${v.icon}</svg>${v.name}</button>`).join('');
- const notes=VAR==='PREC'?tx('MERRA-2 · valores de células, sem interpolação.','MERRA-2 · grid-cell values, no interpolation.'):VAR==='T2M'?tx('AIRS · observações com qualidade validada, convertidas para °C.','AIRS · quality-checked observations, converted to °C.'):tx('Copernicus · ozônio em unidades Dobson (DU), com qualidade validada. Esta passagem não cobre o Brasil.','Copernicus · quality-checked ozone in Dobson units (DU). This swath does not cover Brazil.');
+ const notes=VAR==='PREC'?tx('MERRA-2 · valores de células, sem interpolação.','MERRA-2 · grid-cell values, no interpolation.'):VAR==='T2M'?tx('AIRS · observações com qualidade validada, convertidas para °C.','AIRS · quality-checked observations, converted to °C.'):tx('Copernicus · ozônio em unidades Dobson (DU), com qualidade validada. Uma passagem cobre apenas parte do planeta.','Copernicus · quality-checked ozone in Dobson units (DU). One swath covers only part of the planet.');
  return `<div class="lcol"><div class="ftabs">${tabs}</div><div class="mcard">
  <div><div class="kh"><span class="lbl">${loc}</span><span class="lbl">${selectedObservation||region!=='brasil'?tx('Medição','Measurement'):tx('Média válida','Valid mean')}</span></div><div class="big">${nf(value)}<small>${vunit(m)}</small></div></div>
  ${challengeFilesHTML()}
@@ -40,7 +40,7 @@ function viewMonitor(){
  <div class="lbl observation-caption">${tx('Estatísticas: todas as medições válidas. Países: média das amostras exibidas, sem ponderação por área; cobertura pode ser parcial.','Statistics: all valid measurements. Countries: mean of displayed samples without area weighting; coverage may be partial.')}</div>
  </div></div><div id="slotGlobe" style="position:relative;min-height:0"></div><div class="rcol">
  <div class="live"><div class="ic"><svg viewBox="0 0 24 24"><path d="M2 9l10-5 10 5-10 5z"/><path d="M6 11v5c3 2.5 9 2.5 12 0v-5"/></svg></div><h3>${tx('Aula ao vivo','Live class')}</h3><p>${tx('Investigue estes dados com um quiz.<br>Turma de demonstração simulada.','Investigate these observations in a quiz.<br>Simulated demonstration class.')}</p><button data-go="class">${tx('Explorar o quiz →','Explore the quiz →')}</button></div>
- <div class="insight"><div class="tips"><div class="tip"><span style="background:#FFF4E2">◎</span>${tx('Toque um ponto no globo','Tap an observation on the globe')}</div><div class="tip"><span style="background:#EAF5FE">↔</span>${tx('Alterne os três recortes de 2026','Switch between the three 2026 snapshots')}</div><div class="tip"><span style="background:#F1F9E4">◷</span>${tx('Confira a data e a cobertura','Check the date and coverage')}</div></div>
+ <div class="insight"><div class="tips"><div class="tip"><span style="background:#FFF4E2">◎</span>${tx('Toque um ponto no globo','Tap an observation on the globe')}</div><div class="tip"><span style="background:#EAF5FE">↔</span>${tx('Alterne os três recortes disponíveis','Switch between the three available snapshots')}</div><div class="tip"><span style="background:#F1F9E4">◷</span>${tx('Confira a data e a cobertura','Check the date and coverage')}</div></div>
  <div class="bub"><h4>${tx('EVA explica','EVA’s insight')} <i>${d.name.split(' /')[0]}</i></h4><p id="insightTxt">${insightHTML()}</p><div class="acts"><button class="pri" id="askEva">${tx('Perguntar à EVA','Ask EVA')}</button><button id="explainSig">${tx('Posso concluir uma tendência?','Can we infer a trend?')}</button></div></div><svg class="mascot" viewBox="0 0 120 140" id="mascot"><use href="#botSym"/></svg></div></div>`;
 }
 function monitorAfter(){
@@ -87,7 +87,7 @@ function updateGlobe(){
  globeVisiblePoints=m.points;pointMaterial.size=dataMode==='history'?9:3.5;observationOutline.material.size=dataMode==='history'?12:4.5;paintCountrySurface(m,key);updateVisualLayers();
  overlayMat.uniforms.uData.value=0;overlayMat.uniforms.uImp.value=0;overlayMat.uniforms.uVeil.value=0;overlay.visible=false;
  if(key!==cloudKey){cloudKey=key;const previous=pointGeometry.getAttribute('color')?.array.slice();const positions=[],colors=[];for(const [index,[lon,lat,value]] of m.points.entries()){const p=setFromLatLon(new THREE.Vector3(),lat,lon,1.009);positions.push(p.x,p.y,p.z);const c=dataColor(m.colorValues?m.colorValues[index]:value,m);colors.push(c.r,c.g,c.b);}pointGeometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));pointGeometry.setAttribute('color',new THREE.Float32BufferAttribute(colors,3));pointGeometry.computeBoundingSphere();if(previous?.length===colors.length&&!reducedMotion.matches){cloudTransition={from:previous,to:new Float32Array(colors),start:performance.now()};}else cloudTransition=null;}
- $('stLbl').textContent=d.name+' · '+m.label[LANG];$('hYear').textContent=dataMode==='history'?year:VAR==='PREC'?'09/2026':VAR==='T2M'?'01/2026':'11/2026';
+ $('stLbl').textContent=d.name+' · '+m.label[LANG];$('hYear').textContent=dataMode==='history'?year:observationDate();
  $('legTxt').textContent=dataMode==='history'?(m.visualLabel||tx('Anomalia vs 1981–2010 · ','Anomaly vs 1981–2010 · ')+(VAR==='T2M'?'°C':'%')):(colorRange(m).log?tx('Escala log · ','Log scale · '):tx('Escala linear · ','Linear scale · '))+vunit(m);
  const ends=$('legEnds').children;[colorRange(m).min,colorRange(m).log?Math.expm1(Math.log1p(colorRange(m).max-colorRange(m).min)/2)+colorRange(m).min:(colorRange(m).min+colorRange(m).max)/2,colorRange(m).max].forEach((v,i)=>ends[i].textContent=(dataMode==='history'&&i===0?'≤ ':dataMode==='history'&&i===2?'≥ ':'')+nf(v,0));
  const cv=$('legend'),x=cv.getContext('2d'),g=x.createLinearGradient(0,0,cv.width,0);[0,.25,.5,.75,1].forEach(f=>g.addColorStop(f,dataColor(colorRange(m).log?Math.expm1(f*Math.log1p(colorRange(m).max-colorRange(m).min))+colorRange(m).min:colorRange(m).min+f*(colorRange(m).max-colorRange(m).min),m).getStyle()));x.fillStyle=g;x.fillRect(0,0,cv.width,cv.height);

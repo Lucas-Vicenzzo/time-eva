@@ -15,6 +15,9 @@ test('bilingual quiz answers and source selections match the supplied observatio
   for(const q of qs){assert.ok(q.o.some(([key])=>key===q.ok));assert.equal(new Set(q.o.map(([key])=>key)).size,4);assert.ok(q.exp);}
   const first=qs[0],dry=evidence.datasets.find(d=>d.id==='merra2').metrics.drydays.regions;
   assert.equal(dry[first.ok].value,Math.max(...Object.values(dry).map(c=>c.value)));
+  const ozone=evidence.datasets.find(d=>d.id==='sentinel5p');
+  assert.equal(qs[3].ok,(ozone.validBrazilBoundingBoxPixels??ozone.brazilBoundingBoxPixels)>0?'a':'c');
+  assert.ok(qs[3].exp.includes(ozone.period));
  }
 });
 test('built page uses the original WebGL globe and embedded observations without old trend data',()=>{
