@@ -78,6 +78,8 @@ gh run watch RUN_ID
 
 Open a run to follow each step and its logs. A successful run with changed data
 opens a pull request; a run without changes does not create a commit or pull request.
+Manual runs on other branches validate the candidate only and do not create data
+branches or pull requests.
 
 Automated sources are NASA POWER annual histories, MERRA-2 `M2SMNXEDI`
 version 2 monthly extreme indices, AIRS `AIRS2SUP` version 7.0 surface air
