@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>E.V.A · Pergunte ao planeta</title>
+<meta name="description" content="E.V.A é uma plataforma educacional que transforma dados de satélite da NASA em respostas claras e estatisticamente verificadas para estudantes do ensino médio.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   E.V.A — Landing page
+   Procure por "EDITAR" para achar tudo que precisa ser preenchido.
+   ========================================================= */
+:root{
+  --space:#070b14; --space-2:#0e1422; --ink:#0d1526; --ink-2:#3b4660; --muted:#6b7690;
+  --paper:#f6f5f1; --card:#ffffff; --line:#e7e3da;
+  --green:#e3a948; --teal:#c47a2c; --blue:#b8612f; --orange:#ff6a2b; --red:#e8453c; --violet:#5b6b8c; --amber:#ffb020;
+  --grad: linear-gradient(100deg,#e3a948 0%,#d4893a 50%,#b8612f 100%);
+  --heat: linear-gradient(90deg,#ffb020,#ff6a2b,#e8453c);
+  --r:22px; --maxw:1180px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:Inter,system-ui,sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+h1,h2,h3,h4{font-family:Sora,Inter,sans-serif;line-height:1.1;letter-spacing:-.02em}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 24px}
+.mono{font-family:"JetBrains Mono",monospace}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--teal)}
+.eyebrow::before{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+section{padding:110px 0;position:relative}
+.sec-head{max-width:720px;margin-bottom:56px}
+.sec-head h2{font-size:clamp(2rem,4vw,3rem);margin:14px 0 16px}
+.sec-head p{font-size:1.1rem;color:var(--ink-2)}
+.center{text-align:center;margin-left:auto;margin-right:auto}
+.center .eyebrow::after{content:"";width:22px;height:2px;background:currentColor;border-radius:2px}
+
+.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 26px;border-radius:999px;font-weight:600;font-size:.98rem;transition:transform .2s,box-shadow .2s,background .2s;cursor:pointer;border:0}
+.btn svg{width:18px;height:18px}
+.btn-primary{background:var(--grad);color:#1a1206;box-shadow:0 10px 30px -10px rgba(227,169,72,.55)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 40px -10px rgba(212,137,58,.8)}
+.btn-ghost{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(8px)}
+.btn-ghost:hover{background:rgba(255,255,255,.16)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{transform:translateY(-2px)}
+
+/* ---------- NAV ---------- */
+nav.top{position:fixed;inset:0 0 auto 0;z-index:50;transition:background .3s,box-shadow .3s}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;height:74px}
+nav.top.scrolled{background:rgba(7,11,20,.85);backdrop-filter:blur(14px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.logo{display:flex;align-items:center;gap:10px;color:#fff;font-family:Sora;font-weight:800;font-size:1.3rem;letter-spacing:.04em}
+.logo-mark{width:34px;height:34px;border-radius:11px;background:var(--grad);display:grid;place-items:center;box-shadow:0 0 24px rgba(212,137,58,.5)}
+.logo-mark span{width:14px;height:14px;border-radius:50%;border:2.5px solid #fff;position:relative}
+.logo-mark span::after{content:"";position:absolute;width:24px;height:7px;border:2px solid rgba(255,255,255,.85);border-radius:50%;left:-7px;top:1px;transform:rotate(-20deg)}
+.nav-links{display:flex;gap:26px;white-space:nowrap;font-size:.92rem;color:rgba(255,255,255,.75)}
+.nav-links a:hover{color:#fff}
+.nav-cta{padding:10px 20px;font-size:.88rem}
+.nav-right{display:flex;align-items:center;gap:12px}
+.lang{display:flex;padding:3px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.18)}
+.lang button{font:600 .78rem Inter,sans-serif;letter-spacing:.06em;color:rgba(255,255,255,.65);background:none;border:0;padding:6px 11px;border-radius:999px;cursor:pointer;transition:all .2s}
+.lang button:hover{color:#fff}
+.lang button.on{background:var(--grad);color:#1a1206}
+@media(max-width:420px){.nav-cta{display:none}}
+@media(max-width:1220px){.nav-links{display:none}}
+
+/* ---------- HERO ---------- */
+.hero{min-height:100vh;background:radial-gradient(1200px 700px at 75% 40%,#1b2747 0%,transparent 60%),radial-gradient(900px 600px at 10% 90%,#2b1f12 0%,transparent 60%),var(--space);color:#fff;padding:140px 0 90px;overflow:hidden;display:flex;align-items:center}
+#stars{position:absolute;inset:0;width:100%;height:100%}
+.hero .wrap{position:relative;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:40px;align-items:center;width:100%}
+.hero-badge{display:inline-flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.14);font-size:.85rem;color:rgba(255,255,255,.85);margin-bottom:28px}
+.hero-badge b{background:var(--grad);color:#1a1206;padding:3px 10px;border-radius:999px;font-size:.72rem;letter-spacing:.08em}
+.hero h1{font-size:clamp(3.2rem,8vw,6.4rem);font-weight:800;letter-spacing:-.04em;line-height:.95}
+.hero h1 .dots{color:var(--teal)}
+.hero .tagline{font-family:Sora;font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;margin:14px 0 22px;color:#fff}
+.hero p.lead{font-size:1.15rem;color:rgba(255,255,255,.72);max-width:540px;margin-bottom:36px}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:14px}
+.hero-meta{display:flex;gap:34px;margin-top:52px;flex-wrap:wrap}
+.hero-meta div{font-size:.82rem;color:rgba(255,255,255,.55)}
+.hero-meta strong{display:block;font-family:Sora;font-size:1.6rem;color:#fff;font-weight:700}
+.globe-box{min-width:0;position:relative;aspect-ratio:1/1;width:100%;max-width:580px;justify-self:center}
+#globe{width:100%;height:100%;cursor:grab;border-radius:50%}#globe:active{cursor:grabbing}#globe canvas{outline:none}
+.globe-hint{position:absolute;left:50%;bottom:-6px;transform:translateX(-50%);font-size:.75rem;color:rgba(255,255,255,.5);display:flex;align-items:center;gap:6px;white-space:nowrap;pointer-events:none}
+.globe-hint svg{width:14px;height:14px}
+@media(pointer:coarse){.globe-hint{display:none}}
+.chip{position:absolute;z-index:2;pointer-events:none;background:rgba(9,13,24,.74);border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(12px);border-radius:16px;padding:12px 16px;font-size:.8rem;color:rgba(255,255,255,.7);box-shadow:0 20px 40px -15px rgba(0,0,0,.6);animation:float 6s ease-in-out infinite}
+.chip strong{display:block;font-family:Sora;font-size:1.25rem;color:#fff}
+.chip .ok{color:var(--green);font-weight:600}
+.chip.c1{top:10%;left:-4%}
+.chip.c2{top:44%;right:-6%;animation-delay:-2s}
+.chip.c3{bottom:8%;left:6%;animation-delay:-4s}
+.chip.c3 strong{color:rgba(255,255,255,.55);font-style:italic}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.scroll-hint{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);width:26px;height:42px;border:2px solid rgba(255,255,255,.3);border-radius:14px}
+.scroll-hint::after{content:"";position:absolute;left:50%;top:8px;width:4px;height:8px;margin-left:-2px;border-radius:2px;background:#fff;animation:sh 1.8s infinite}
+@keyframes sh{0%{opacity:0;transform:translateY(0)}40%{opacity:1}100%{opacity:0;transform:translateY(12px)}}
+@media(max-width:920px){.hero .wrap{grid-template-columns:minmax(0,1fr)}.globe-box{max-width:420px}.chip.c1{left:0}.chip.c2{right:0}.scroll-hint{display:none}}
+@media(max-width:560px){.chip{padding:8px 11px;font-size:.68rem;border-radius:12px}.chip strong{font-size:1rem}.chip.c1{top:4%}.chip.c3{bottom:2%;left:0}.hero{padding-top:110px}}
+
+/* ---------- STRIP ---------- */
+.strip{background:var(--space-2);color:rgba(255,255,255,.6);padding:26px 0;border-top:1px solid rgba(255,255,255,.06)}
+.strip .wrap{display:flex;align-items:center;justify-content:center;gap:16px 44px;flex-wrap:wrap;font-family:Sora;font-weight:600;letter-spacing:.08em;font-size:.95rem}
+.strip small{font-family:Inter;font-weight:500;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem;color:rgba(255,255,255,.4)}
+
+/* ---------- PROBLEM ---------- */
+.problem-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.problem-list{display:grid;gap:18px}
+.pcard{display:flex;gap:18px;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:22px 24px}
+.pcard .ic{flex:none;width:46px;height:46px;border-radius:14px;display:grid;place-items:center;font-size:1.3rem}
+.pcard h4{font-size:1.05rem;margin-bottom:4px}
+.pcard p{color:var(--ink-2);font-size:.95rem}
+.big-quote{font-family:Sora;font-size:clamp(1.6rem,3vw,2.3rem);font-weight:700;line-height:1.25;letter-spacing:-.02em}
+.big-quote em{font-style:normal;background:var(--heat);-webkit-background-clip:text;background-clip:text;color:transparent}
+@media(max-width:860px){.problem-grid{grid-template-columns:1fr}}
+
+/* ---------- HOW ---------- */
+.how{background:#fff}
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;counter-reset:s}
+.step{position:relative;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:30px 24px 28px;transition:transform .25s,box-shadow .25s}
+.step:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(13,21,38,.25)}
+.step::before{counter-increment:s;content:"0" counter(s);font-family:"JetBrains Mono";font-size:.8rem;color:var(--teal);font-weight:500}
+.step .ic{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;margin:16px 0 18px;color:#fff}
+.step .ic svg{width:26px;height:26px}
+.step h3{font-size:1.15rem;margin-bottom:8px}
+.step p{font-size:.93rem;color:var(--ink-2)}
+.step .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.tag{font-size:.72rem;font-weight:600;padding:4px 10px;border-radius:999px;background:#fff;border:1px solid var(--line);color:var(--ink-2)}
+@media(max-width:980px){.steps{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.steps{grid-template-columns:1fr}}
+
+/* ---------- PRODUCT ---------- */
+.product{background:linear-gradient(180deg,#fff 0%,var(--paper) 100%)}
+.product-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:60px;align-items:center}
+.device{position:relative;border-radius:26px;padding:12px;background:linear-gradient(145deg,#1b2440,#0a1124);box-shadow:0 50px 100px -40px rgba(13,21,38,.55)}
+.device-bar{display:flex;gap:6px;padding:4px 8px 12px}
+.device-bar i{width:10px;height:10px;border-radius:50%;background:#ff5f57}.device-bar i:nth-child(2){background:#febc2e}.device-bar i:nth-child(3){background:#28c840}
+.device img{border-radius:16px;max-height:560px;width:100%;object-fit:cover;object-position:top}
+.device .float-tag{position:absolute;right:-18px;bottom:40px;background:#fff;border-radius:16px;padding:14px 18px;box-shadow:0 20px 40px -12px rgba(13,21,38,.3);font-size:.82rem;color:var(--ink-2)}
+.device .float-tag strong{display:block;font-family:Sora;color:var(--ink);font-size:1rem}
+.feature-list{display:grid;gap:22px;margin-top:30px}
+.feat{display:flex;gap:16px}
+.feat .dot{flex:none;width:28px;height:28px;border-radius:50%;background:rgba(227,169,72,.12);color:var(--green);display:grid;place-items:center;font-weight:700;font-size:.85rem}
+.feat h4{font-size:1.02rem;margin-bottom:2px}
+.feat p{color:var(--ink-2);font-size:.94rem}
+@media(max-width:900px){.product-grid{grid-template-columns:1fr}.device .float-tag{right:10px}}
+
+/* ---------- RIGOR (dark) ---------- */
+.rigor{background:var(--space);color:#fff;overflow:hidden}
+.rigor::before{content:"";position:absolute;inset:0;background:radial-gradient(700px 400px at 85% 20%,rgba(91,107,140,.25),transparent 60%),radial-gradient(600px 400px at 0% 100%,rgba(227,169,72,.18),transparent 60%)}
+.rigor .wrap{position:relative}
+.rigor .sec-head p{color:rgba(255,255,255,.7)}
+.pipeline{display:grid;grid-template-columns:repeat(5,1fr);gap:0;align-items:stretch;margin-bottom:60px}
+.pipe{position:relative;padding:24px 20px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.03);margin-right:22px;border-radius:18px}
+.pipe:not(:last-child)::after{content:"";position:absolute;right:-22px;top:50%;width:22px;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+.pipe .who{font-family:"JetBrains Mono";font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
+.pipe h4{font-size:1rem;margin-bottom:6px}
+.pipe p{font-size:.85rem;color:rgba(255,255,255,.6)}
+.pipe.code .who{color:var(--green)} .pipe.ai .who{color:var(--violet)} .pipe.check .who{color:var(--amber)}
+.pipe.ai{border-color:rgba(91,107,140,.5);background:rgba(91,107,140,.08)}
+.pipe.check{border-color:rgba(255,176,32,.5);background:rgba(255,176,32,.06)}
+@media(max-width:980px){.pipeline{grid-template-columns:1fr;gap:16px}.pipe{margin-right:0}.pipe:not(:last-child)::after{display:none}}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.stat{border-radius:var(--r);padding:28px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1)}
+.stat .mono{font-size:.75rem;color:var(--teal)}
+.stat h3{font-size:1.3rem;margin:10px 0 8px}
+.stat p{font-size:.92rem;color:rgba(255,255,255,.65)}
+.stat .formula{margin-top:16px;font-family:"JetBrains Mono";font-size:.82rem;padding:10px 14px;border-radius:10px;background:rgba(0,0,0,.3);color:#f3dcb2}
+.ai-rule{margin-top:50px;display:flex;align-items:center;gap:22px;padding:26px 30px;border-radius:var(--r);background:linear-gradient(100deg,rgba(91,107,140,.18),rgba(212,137,58,.12));border:1px solid rgba(255,255,255,.14)}
+.ai-rule .ic{flex:none;width:56px;height:56px;border-radius:16px;background:var(--violet);display:grid;place-items:center}
+.ai-rule .ic svg{width:28px;height:28px}
+.ai-rule h3{font-size:1.25rem;margin-bottom:4px}
+.ai-rule p{color:rgba(255,255,255,.72);font-size:.95rem}
+@media(max-width:860px){.stats-grid{grid-template-columns:1fr}.ai-rule{flex-direction:column;align-items:flex-start}}
+
+/* ---------- SANDBOX ---------- */
+.sandbox{background:#fff}
+.sandbox-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:56px;align-items:center}
+.lasers{display:grid;gap:14px}
+.laser{display:flex;align-items:center;gap:18px;padding:18px 20px;border-radius:18px;border:1px solid var(--line);background:var(--paper);cursor:pointer;transition:all .25s;text-align:left;font:inherit;color:inherit;width:100%}
+.laser:hover,.laser.active{border-color:transparent;background:#fff;box-shadow:0 18px 40px -18px rgba(13,21,38,.3);transform:translateX(6px)}
+.laser.active{outline:2px solid var(--orange)}
+.laser .ic{flex:none;width:50px;height:50px;border-radius:14px;display:grid;place-items:center;font-size:1.5rem}
+.laser h4{font-size:1.02rem}
+.laser p{font-size:.88rem;color:var(--muted)}
+.laser .arrow{margin-left:auto;color:var(--orange);font-weight:700}
+.sim{border-radius:28px;background:var(--space);color:#fff;padding:30px;position:relative;overflow:hidden;min-height:420px}
+.sim::before{content:"";position:absolute;inset:0;background:radial-gradient(500px 300px at 80% 0%,rgba(255,106,43,.25),transparent 60%)}
+.sim > *{position:relative}
+.sim-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:22px}
+.sim-top .mono{font-size:.72rem;color:rgba(255,255,255,.5);letter-spacing:.08em}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:.75rem;color:var(--green);font-weight:600}
+.live::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--green);box-shadow:0 0 10px var(--green);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.3}}
+.sim h3{font-size:1.5rem;margin-bottom:6px}
+.sim .sub{color:rgba(255,255,255,.6);font-size:.92rem;margin-bottom:24px}
+.regions{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.region{border-radius:16px;padding:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1)}
+.region .lbl{font-size:.78rem;color:rgba(255,255,255,.55)}
+.region .val{font-family:Sora;font-size:1.7rem;font-weight:700;margin:4px 0}
+.region .val.up{color:var(--orange)} .region .val.down{color:#8fb3e0} .region .val.na{color:rgba(255,255,255,.4);font-size:1.15rem;font-style:italic}
+.region .bar{height:6px;border-radius:4px;background:rgba(255,255,255,.08);overflow:hidden}
+.region .bar i{display:block;height:100%;border-radius:4px;transition:width .8s cubic-bezier(.2,.8,.2,1)}
+.sim-foot{margin-top:20px;font-size:.8rem;color:rgba(255,255,255,.5);display:flex;gap:8px;align-items:flex-start}
+@media(max-width:900px){.sandbox-grid{grid-template-columns:1fr}}
+
+/* ---------- CLASSROOM ---------- */
+.class-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+.ccard{border-radius:var(--r);padding:32px 28px;background:var(--card);border:1px solid var(--line);position:relative;overflow:hidden}
+.ccard .num{font-family:Sora;font-size:3.2rem;font-weight:800;line-height:1;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;opacity:.9}
+.ccard h3{font-size:1.2rem;margin:16px 0 8px}
+.ccard p{color:var(--ink-2);font-size:.95rem}
+.vote-cards{display:flex;gap:8px;margin-top:20px}
+.vote-cards span{width:44px;height:58px;border-radius:8px;display:grid;place-items:center;font-family:Sora;font-weight:800;color:#fff;font-size:1.2rem;box-shadow:0 8px 16px -8px rgba(0,0,0,.4)}
+.vote-cards span:nth-child(1){background:var(--green);transform:rotate(-6deg)}
+.vote-cards span:nth-child(2){background:var(--blue);transform:rotate(-2deg)}
+.vote-cards span:nth-child(3){background:var(--orange);transform:rotate(3deg)}
+.vote-cards span:nth-child(4){background:var(--violet);transform:rotate(7deg)}
+@media(max-width:900px){.class-grid{grid-template-columns:1fr}}
+
+/* ---------- VALIDATION ---------- */
+.validation{background:linear-gradient(180deg,var(--paper),#f6efe4)}
+.val-grid{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:stretch}
+.interview{position:relative;border-radius:28px;overflow:hidden;box-shadow:0 40px 80px -40px rgba(13,21,38,.5);background:#000}
+.interview img{width:100%;height:100%;object-fit:cover}
+.interview .badge{position:absolute;left:18px;top:18px;background:rgba(5,11,26,.75);backdrop-filter:blur(8px);color:#fff;padding:8px 14px;border-radius:999px;font-size:.78rem;font-weight:600;display:flex;align-items:center;gap:8px}
+.interview .badge::before{content:"";width:8px;height:8px;border-radius:50%;background:var(--red)}
+.quote-card{border-radius:28px;background:var(--card);padding:40px 36px;border:1px solid var(--line);display:flex;flex-direction:column;justify-content:space-between;position:relative}
+.quote-card .qmark{font-family:Sora;font-size:6rem;line-height:.6;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;height:50px}
+.quote-card blockquote{font-family:Sora;font-size:clamp(1.25rem,2.2vw,1.6rem);font-weight:600;line-height:1.35;letter-spacing:-.01em;margin:10px 0 30px}
+.placeholder{background:repeating-linear-gradient(-45deg,rgba(212,137,58,.07) 0 10px,transparent 10px 20px);border:1.5px dashed rgba(212,137,58,.55);border-radius:10px;padding:2px 8px}
+.person{display:flex;align-items:center;gap:14px;padding-top:24px;border-top:1px solid var(--line)}
+.person img{width:56px;height:56px;border-radius:50%;object-fit:cover}
+.person strong{display:block;font-family:Sora}
+.person span{font-size:.88rem;color:var(--muted)}
+.val2{margin-top:40px;display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:34px 38px}
+.val2 .ic{width:64px;height:64px;border-radius:18px;background:rgba(91,107,140,.1);display:grid;place-items:center;color:var(--blue)}
+.val2 .ic svg{width:30px;height:30px}
+.val2 .k{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--blue)}
+.val2 p.t{font-size:1.12rem;margin:8px 0 10px;color:var(--ink)}
+.val2 .src{font-size:.88rem;color:var(--muted)}
+@media(max-width:900px){.val-grid{grid-template-columns:1fr}.val2{grid-template-columns:1fr}}
+
+/* ---------- TEAM ---------- */
+.team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:22px}
+.member{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:30px 20px 26px;transition:transform .25s,box-shadow .25s}
+.member:hover{transform:translateY(-6px);box-shadow:0 24px 50px -24px rgba(13,21,38,.25)}
+.avatar{position:relative;width:132px;height:132px;margin:0 auto 18px;border-radius:50%;padding:4px;background:var(--grad)}
+.avatar .ph{width:100%;height:100%;border-radius:50%;background:var(--paper);display:grid;place-items:center;color:var(--muted);font-size:.72rem;text-align:center;line-height:1.3;border:3px solid #fff}
+.avatar .ph svg{width:38px;height:38px;color:#b7c0d3;margin:0 auto 4px}
+.avatar img{position:absolute;inset:4px;width:calc(100% - 8px);height:calc(100% - 8px);border-radius:50%;object-fit:cover;border:3px solid #fff}
+.member h3{font-size:1.1rem}
+.member .role{font-size:.88rem;color:var(--teal);font-weight:600;margin:4px 0 10px}
+.member p{font-size:.86rem;color:var(--ink-2)}
+.member .socials{display:flex;justify-content:center;gap:10px;margin-top:14px}
+.member .socials a{width:34px;height:34px;border-radius:50%;background:var(--paper);display:grid;place-items:center;color:var(--ink-2)}
+.member .socials a:hover{background:var(--ink);color:#fff}
+.member .socials svg{width:16px;height:16px}
+@media(max-width:980px){.team-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.team-grid{grid-template-columns:1fr}}
+
+
+/* ---------- PÚBLICO-ALVO ---------- */
+.aud-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.aud{border-radius:var(--r);padding:32px 28px;background:var(--card);border:1px solid var(--line);display:flex;flex-direction:column}
+.aud.main{background:var(--space);color:#fff;border-color:transparent;position:relative;overflow:hidden}
+.aud.main::before{content:"";position:absolute;inset:0;background:radial-gradient(400px 260px at 100% 0%,rgba(227,169,72,.22),transparent 60%)}
+.aud.main > *{position:relative}
+.aud .role-k{font-family:"JetBrains Mono";font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.aud.main .role-k{color:#e3a948}
+.aud h3{font-size:1.35rem;margin:12px 0 10px}
+.aud > p{color:var(--ink-2);font-size:.95rem}
+.aud.main > p{color:rgba(255,255,255,.7)}
+.aud ul{list-style:none;margin-top:20px;display:grid;gap:10px;font-size:.92rem}
+.aud li{display:flex;gap:10px;align-items:flex-start}
+.aud li::before{content:"";flex:none;width:6px;height:6px;border-radius:50%;background:var(--teal);margin-top:9px}
+.aud.main li::before{background:#e3a948}
+.aud.main li{color:rgba(255,255,255,.85)}
+.channels{margin-top:22px;display:flex;flex-wrap:wrap;gap:12px;align-items:center;padding:22px 26px;border-radius:var(--r);border:1px dashed var(--line);background:#fff}
+.channels b{font-family:Sora;font-size:.95rem;margin-right:6px}
+.channels span{font-size:.85rem;padding:7px 14px;border-radius:999px;background:var(--paper);border:1px solid var(--line);color:var(--ink-2)}
+@media(max-width:900px){.aud-grid{grid-template-columns:1fr}}
+
+/* ---------- VALIDAÇÃO 2 ---------- */
+.val-milena{margin-top:28px;display:grid;grid-template-columns:1.25fr 1fr;gap:28px;background:var(--card);border:1px solid var(--line);border-radius:28px;padding:40px}
+.val-milena blockquote{font-family:Sora;font-size:clamp(1.15rem,2vw,1.45rem);font-weight:600;line-height:1.4;letter-spacing:-.01em;margin:6px 0 26px}
+.val-milena .k{font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--teal)}
+.initials{width:56px;height:56px;border-radius:50%;background:var(--space);color:#e3a948;display:grid;place-items:center;font-family:Sora;font-weight:700;font-size:1.3rem;flex:none}
+.highlights{display:grid;gap:14px;align-content:center}
+.hl{border-radius:18px;padding:20px 22px;background:var(--paper);border:1px solid var(--line)}
+.hl .tag2{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);margin-bottom:8px}
+.hl .tag2 i{width:8px;height:8px;border-radius:50%;background:var(--teal)}
+.hl p{font-size:.93rem;color:var(--ink-2);font-style:italic}
+@media(max-width:900px){.val-milena{grid-template-columns:1fr;padding:28px}}
+
+/* ---------- MATERIAIS ---------- */
+.materials{background:var(--space-2);color:#fff}
+.materials .sec-head p{color:rgba(255,255,255,.7)}
+.yt{position:relative;width:100%;max-width:960px;margin:0 auto 90px;padding-top:56.25%;border-radius:24px;overflow:hidden;background:radial-gradient(600px 320px at 50% 30%,rgba(227,169,72,.16),transparent 65%),#0a0f1b;border:1px solid rgba(255,255,255,.12);box-shadow:0 40px 80px -40px rgba(0,0,0,.7)}
+.yt iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.yt-ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;text-align:center;padding:20px}
+.yt-ph .play{width:84px;height:84px;border-radius:50%;background:var(--grad);display:grid;place-items:center;margin-bottom:10px;box-shadow:0 0 0 14px rgba(227,169,72,.12)}
+.yt-ph .play svg{width:30px;height:30px;margin-left:4px}
+.yt-ph strong{font-family:Sora;font-size:1.4rem}
+.yt-ph span{font-size:.9rem;color:rgba(255,255,255,.55)}
+@media(max-width:600px){.yt{margin-bottom:60px}.yt-ph .play{width:60px;height:60px}.yt-ph strong{font-size:1.1rem}}
+.mat-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:24px;align-items:stretch}
+.video{position:relative;border-radius:24px;overflow:hidden;aspect-ratio:16/9;background:radial-gradient(600px 300px at 30% 20%,rgba(227,169,72,.18),transparent 60%),#0a0f1b;border:1px solid rgba(255,255,255,.1);display:grid;place-items:center}
+.video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video .play{width:84px;height:84px;border-radius:50%;background:var(--grad);display:grid;place-items:center;box-shadow:0 0 0 14px rgba(227,169,72,.12),0 20px 40px -10px rgba(0,0,0,.6)}
+.video .play svg{width:30px;height:30px;margin-left:5px}
+.video .vlabel{position:absolute;left:22px;bottom:20px;right:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:10px}
+.video .vlabel strong{display:block;font-family:Sora;font-size:1.2rem}
+.video .vlabel span{font-size:.85rem;color:rgba(255,255,255,.6)}
+.video .vlabel .pill{font-family:"JetBrains Mono";font-size:.7rem;padding:5px 10px;border-radius:999px;background:rgba(255,255,255,.08);color:rgba(255,255,255,.75);white-space:nowrap}
+.mat-list{display:grid;gap:14px}
+.mat{display:flex;align-items:center;gap:18px;padding:20px 22px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);transition:all .25s}
+.mat:hover{background:rgba(255,255,255,.08);border-color:rgba(227,169,72,.55);transform:translateX(4px)}
+.mat .fi{flex:none;width:48px;height:48px;border-radius:14px;display:grid;place-items:center;font-family:"JetBrains Mono";font-size:.72rem;font-weight:700}
+.mat h4{font-size:1.02rem}
+.mat p{font-size:.85rem;color:rgba(255,255,255,.6)}
+.mat .go{margin-left:auto;color:#e3a948;font-weight:700}
+@media(max-width:900px){.mat-grid{grid-template-columns:1fr}}
+
+/* ---------- DRIVE CTA ---------- */
+.drive{padding:0 0 110px;background:#fff}
+.drive-box{border-radius:34px;padding:64px;background:radial-gradient(600px 300px at 90% 0%,rgba(212,137,58,.45),transparent 60%),radial-gradient(500px 300px at 0% 100%,rgba(227,169,72,.35),transparent 60%),var(--space);color:#fff;display:grid;grid-template-columns:1fr;gap:40px;align-items:center;overflow:hidden;position:relative;text-align:center}
+.drive-box > div{max-width:640px;margin:0 auto}
+.mat-list.cols{grid-template-columns:repeat(3,1fr)}
+.mat .go svg{width:20px;height:20px}
+@media(max-width:900px){.mat-list.cols{grid-template-columns:1fr}}
+.drive-box h2{font-size:clamp(2rem,4vw,2.8rem);margin:14px 0 14px}
+.drive-box p{color:rgba(255,255,255,.72);font-size:1.05rem;margin-bottom:28px}
+.drive-files{display:grid;gap:12px}
+.file{display:flex;align-items:center;gap:14px;padding:14px 18px;border-radius:14px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);font-size:.92rem}
+.file .fi{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;font-size:.7rem;font-weight:700}
+.file small{display:block;color:rgba(255,255,255,.5);font-size:.78rem}
+@media(max-width:860px){.drive-box{grid-template-columns:1fr;padding:40px 28px}}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--space);color:rgba(255,255,255,.6);padding:60px 0 40px;font-size:.9rem}
+footer .wrap{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:40px}
+footer h5{font-family:Sora;color:#fff;font-size:.95rem;margin-bottom:14px}
+footer ul{list-style:none;display:grid;gap:8px}
+footer a:hover{color:#fff}
+.foot-bottom{max-width:var(--maxw);margin:44px auto 0;padding:24px 24px 0;border-top:1px solid rgba(255,255,255,.08);display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:.8rem;color:rgba(255,255,255,.4)}
+@media(max-width:760px){footer .wrap{grid-template-columns:1fr}}
+
+/* reveal */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s ease}
+.reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none}.chip{animation:none}}
+</style>
+</head>
+<body>
+
+<!-- ================= NAV ================= -->
+<nav class="top" id="nav">
+  <div class="wrap">
+    <a href="#topo" class="logo"><span class="logo-mark"><span></span></span>E.V.A</a>
+    <div class="nav-links">
+      <a href="#como-funciona">Como funciona</a>
+      <a href="#rigor">Rigor científico</a>
+      <a href="#mexa">Mexa no Planeta</a>
+      <a href="#publico">Público-alvo</a>
+      <a href="#validacao">Validação</a>
+      <a href="#materiais">Materiais</a>
+      <a href="#equipe">Equipe</a>
+    </div>
+    <!-- EDITAR: link do Google Drive -->
+    <div class="nav-right">
+      <div class="lang" role="group" aria-label="Idioma / Language"><button type="button" data-l="pt" class="on">PT</button><button type="button" data-l="en">EN</button></div>
+      <a href="#drive" class="btn btn-primary nav-cta">Ver projeto</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<header class="hero" id="topo">
+  <canvas id="stars"></canvas>
+  <div class="wrap">
+    <div>
+      <div class="hero-badge"><b>NASA DATA</b> Dados reais de satélite para a sala de aula</div>
+      <h1>E<span class="dots">.</span>V<span class="dots">.</span>A</h1>
+      <div class="tagline">Pergunte ao <span class="grad-text">planeta.</span></div>
+      <p class="lead">O aluno faz uma pergunta ou toca num lugar do globo. O E.V.A busca os dados de satélite da NASA, mede o que está mudando e diz se a mudança é real ou só acaso, em linguagem que um adolescente entende.</p>
+      <div class="hero-ctas">
+        <a href="#como-funciona" class="btn btn-primary">Descobrir como funciona
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+        <a href="#drive" class="btn btn-ghost">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Materiais do projeto</a>
+      </div>
+      <div class="hero-meta">
+        <div><strong>4+</strong>missões e modelos NASA</div>
+        <div><strong>40+ anos</strong>de séries temporais</div>
+        <div><strong>0</strong>números inventados pela IA</div>
+      </div>
+    </div>
+    <div class="globe-box">
+      <div id="globe" aria-label="Globo terrestre interativo: arraste para girar"></div>
+      <div class="globe-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11V5a2 2 0 1 1 4 0v6m0-2a2 2 0 1 1 4 0v4a7 7 0 0 1-7 7h-1a6 6 0 0 1-5-3l-2-4a2 2 0 0 1 3-2l2 2"/></svg>Arraste para girar o planeta</div>
+      <div class="chip c1">Brasil · temperatura<strong>+1,3 °C</strong><span class="ok">✓ p &lt; 0,001</span></div>
+      <div class="chip c2">Chuva · Nordeste<strong>−99 mm</strong>por década</div>
+      <div class="chip c3">Antártida · NO₂<strong>sem dado</strong>o planeta não inventa</div>
+    </div>
+  </div>
+  <div class="scroll-hint" aria-hidden="true"></div>
+</header>
+
+<div class="strip">
+  <div class="wrap">
+    <small>Construído sobre</small>
+    <span>MODIS</span><span>GPM · IMERG</span><span>OMI</span><span>MERRA-2</span><span>NASA POWER</span><span>EARTHDATA</span>
+  </div>
+</div>
+
+<!-- ================= PROBLEMA ================= -->
+<section id="problema">
+  <div class="wrap problem-grid">
+    <div class="reveal">
+      <span class="eyebrow">O problema</span>
+      <p class="big-quote" style="margin-top:18px">Os dados que provam que o planeta está mudando são <em>públicos</em>. Mas quase nenhum estudante consegue chegar até eles.</p>
+      <p style="margin-top:22px;color:var(--ink-2);font-size:1.05rem">A NASA disponibiliza petabytes de observações gratuitamente. Só que estão em formatos científicos, portais técnicos e unidades difíceis. O resultado: o ensino médio fala de mudança climática sem nunca mostrar a evidência.</p>
+    </div>
+    <div class="problem-list reveal">
+      <div class="pcard"><div class="ic" style="background:#fff1ea">🗂️</div><div><h4>Difícil de encontrar</h4><p>Dezenas de portais, produtos e versões. Saber qual dataset responde a uma pergunta já exige ser especialista.</p></div></div>
+      <div class="pcard"><div class="ic" style="background:#eaf2ff">📉</div><div><h4>Difícil de interpretar</h4><p>Uma linha que sobe pode ser tendência ou ruído. Sem estatística, o aluno não sabe diferenciar.</p></div></div>
+      <div class="pcard"><div class="ic" style="background:#f0ecff">🤖</div><div><h4>IA que inventa</h4><p>Chatbots respondem com confiança números que não existem. Em ciência, isso é desinformação.</p></div></div>
+      <div class="pcard"><div class="ic" style="background:#eafaf2">🏫</div><div><h4>Escola sem estrutura</h4><p>Muitas escolas públicas não têm laboratório nem permitem celular em sala.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMO FUNCIONA ================= -->
+<section class="how" id="como-funciona">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Como funciona</span>
+      <h2>Da curiosidade à evidência em <span class="grad-text">quatro passos</span></h2>
+      <p>O aluno pergunta. O E.V.A escolhe os dados, faz as contas com código auditável e explica o resultado sem enrolação.</p>
+    </div>
+    <div class="steps">
+      <div class="step reveal">
+        <div class="ic" style="background:linear-gradient(135deg,#e3a948,#d4893a)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg></div>
+        <h3>Pergunte ou escolha um lugar</h3>
+        <p>"Está chovendo menos no sertão?" ou um toque no globo. Linguagem natural, sem jargão.</p>
+      </div>
+      <div class="step reveal">
+        <div class="ic" style="background:linear-gradient(135deg,#d4893a,#b8612f)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h16M4 12h10M4 17h6"/><circle cx="18" cy="16" r="3"/></svg></div>
+        <h3>O sistema escolhe as variáveis</h3>
+        <p>Chuva, temperatura, vegetação ou poluição, vindas das missões e modelos certos para a pergunta.</p>
+        <div class="tags"><span class="tag">GPM</span><span class="tag">MODIS</span><span class="tag">OMI</span><span class="tag">MERRA-2</span></div>
+      </div>
+      <div class="step reveal">
+        <div class="ic" style="background:linear-gradient(135deg,#b8612f,#5b6b8c)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l5-5 4 3 8-8"/><path d="M3 21h18"/></svg></div>
+        <h3>Série temporal + estatística</h3>
+        <p>Gera a série da região e testa: o que muda, onde, quanto e se é significativo ou acaso.</p>
+        <div class="tags"><span class="tag">Mann-Kendall</span><span class="tag">Sen</span><span class="tag">IC 95%</span></div>
+      </div>
+      <div class="step reveal">
+        <div class="ic" style="background:linear-gradient(135deg,#5b6b8c,#ff6a2b)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></div>
+        <h3>A IA explica, não calcula</h3>
+        <p>Um texto simples, fiel aos números do código, conferido por um verificador antes de chegar ao aluno.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PRODUTO ================= -->
+<section class="product" id="produto">
+  <div class="wrap product-grid">
+    <div class="device reveal">
+      <div class="device-bar"><i></i><i></i><i></i></div>
+      <img src="assets/prototipo-dashboard.jpg" alt="Painel do protótipo do E.V.A mostrando que o Brasil esquentou 1,3 °C entre 1981 e 2024, com tendência estatisticamente significativa">
+      <div class="float-tag"><strong>+0,46 °C / década</strong>Pantanal · região que mais esquenta</div>
+    </div>
+    <div class="reveal">
+      <span class="eyebrow">O protótipo</span>
+      <h2 style="font-size:clamp(2rem,4vw,2.8rem);margin:14px 0 16px">Números reais, respostas que cabem numa aula</h2>
+      <p style="color:var(--ink-2);font-size:1.08rem">O protótipo já mostra 44 anos de dados para o Brasil e seis biomas e regiões, com tendências testadas e marcadas como significativas ou não.</p>
+      <div class="feature-list">
+        <div class="feat"><span class="dot">✓</span><div><h4>Tendência com selo de confiança</h4><p>Cada número vem com a indicação de significância estatística e o valor-p.</p></div></div>
+        <div class="feat"><span class="dot">✓</span><div><h4>Fonte sempre visível</h4><p>Missão, variável e método aparecem junto do gráfico. Nada de caixa-preta.</p></div></div>
+        <div class="feat"><span class="dot">✓</span><div><h4>Gamificação</h4><p>Níveis de "detetive", XP e desafios mantêm o aluno investigando.</p></div></div>
+        <div class="feat"><span class="dot">✓</span><div><h4>Comparação entre regiões</h4><p>Amazônia, Cerrado, Nordeste, Pantanal, Sudeste e Sul lado a lado.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= RIGOR ================= -->
+<section class="rigor" id="rigor">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Rigor científico</span>
+      <h2>A IA fala. <span class="grad-text">O código calcula.</span> O verificador confere.</h2>
+      <p>Separar quem calcula de quem explica é a decisão central do E.V.A. É o que torna a plataforma confiável o bastante para uma sala de aula.</p>
+    </div>
+    <div class="pipeline reveal">
+      <div class="pipe code"><div class="who">Código</div><h4>Coleta</h4><p>Baixa a série da região nos produtos NASA.</p></div>
+      <div class="pipe code"><div class="who">Código</div><h4>Estatística</h4><p>Mann-Kendall, inclinação de Sen e intervalos de confiança.</p></div>
+      <div class="pipe ai"><div class="who">IA</div><h4>Explicação</h4><p>Traduz o resultado para linguagem simples, sem gerar números.</p></div>
+      <div class="pipe check"><div class="who">Verificador</div><h4>Conferência</h4><p>Cada número do texto é comparado com a saída do código.</p></div>
+      <div class="pipe"><div class="who" style="color:#fff">Aluno</div><h4>Resposta</h4><p>O que muda, onde, quanto e se é real.</p></div>
+    </div>
+    <div class="stats-grid">
+      <div class="stat reveal"><span class="mono">TESTE 01</span><h3>Mann-Kendall</h3><p>Responde se existe tendência ou se a variação é só acaso. Não exige que os dados sigam uma distribuição normal.</p><div class="formula">p &lt; 0,05 → tendência significativa</div></div>
+      <div class="stat reveal"><span class="mono">TESTE 02</span><h3>Inclinação de Sen</h3><p>Mede quanto muda por década, de forma robusta a anos extremos e valores fora da curva.</p><div class="formula">β = mediana[(xⱼ − xᵢ)/(j − i)]</div></div>
+      <div class="stat reveal"><span class="mono">TESTE 03</span><h3>Intervalo de confiança</h3><p>Mostra a margem de incerteza. Ensina que ciência trabalha com faixas, não com certezas absolutas.</p><div class="formula">tendência ± margem · IC 95%</div></div>
+    </div>
+    <div class="ai-rule reveal">
+      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/><path d="M9 12l2 2 4-4"/></svg></div>
+      <div><h3>Quando não há dado, o planeta diz "sem dado".</h3><p>Em vez de inventar uma resposta plausível, o E.V.A admite o limite da evidência. É uma lição de honestidade científica embutida no produto.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MEXA NO PLANETA ================= -->
+<section class="sandbox" id="mexa">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Sandbox</span>
+      <h2>Mexa no <span class="grad-text">Planeta</span></h2>
+      <p>O aluno dispara "lasers" e vê o que os dados reais mostraram quando algo parecido aconteceu de verdade, inclusive efeitos opostos em regiões diferentes.</p>
+    </div>
+    <div class="sandbox-grid">
+      <div class="lasers reveal" id="lasers">
+        <button class="laser active" data-k="vulcao"><span class="ic" style="background:#fff1ea">🌋</span><span><h4>Erupção de um vulcão</h4><p>Cinzas e aerossóis na atmosfera</p></span><span class="arrow">→</span></button>
+        <button class="laser" data-k="floresta"><span class="ic" style="background:#eafaf2">🌳</span><span><h4>Desmatar uma floresta</h4><p>Vegetação, chuva e temperatura local</p></span><span class="arrow">→</span></button>
+        <button class="laser" data-k="cidade"><span class="ic" style="background:#eaf2ff">🏙️</span><span><h4>Desligar uma cidade</h4><p>Poluição e ilhas de calor</p></span><span class="arrow">→</span></button>
+      </div>
+      <div class="sim reveal" id="sim">
+        <div class="sim-top"><span class="mono">SIMULAÇÃO · DADOS OBSERVADOS</span><span class="live">ao vivo</span></div>
+        <h3 id="simTitle"></h3>
+        <p class="sub" id="simSub"></p>
+        <div class="regions" id="simRegions"></div>
+        <div class="sim-foot"><span>ⓘ</span><span>Demonstração ilustrativa da interface. No produto, cada valor vem de um evento histórico real com fonte e teste estatístico.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= SALA DE AULA ================= -->
+<section id="sala">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Para a escola</span>
+      <h2>Funciona sozinho ou com a <span class="grad-text">turma inteira</span></h2>
+      <p>Pensado para a realidade da escola pública brasileira, inclusive onde o celular não entra na sala.</p>
+    </div>
+    <div class="class-grid">
+      <div class="ccard reveal"><div class="num">01</div><h3>Modo individual</h3><p>O estudante explora sozinho, no seu ritmo, ganhando níveis de detetive enquanto investiga o próprio bairro, bioma ou país.</p></div>
+      <div class="ccard reveal"><div class="num">02</div><h3>Modo sala de aula</h3><p>O professor projeta o globo, lança uma pergunta e a turma aposta antes de ver o resultado. Depois todos investigam juntos o porquê.</p></div>
+      <div class="ccard reveal"><div class="num">03</div><h3>Sem celular? Sem problema</h3><p>Cartões de votação coloridos permitem que a turma inteira participe só com o projetor do professor.</p><div class="vote-cards"><span>A</span><span>B</span><span>C</span><span>D</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PÚBLICO-ALVO ================= -->
+<section id="publico">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Público-alvo</span>
+      <h2>Feito para quem aprende, <span class="grad-text">quem ensina e quem decide</span></h2>
+      <p>O E.V.A atende três perfis dentro da mesma escola: o aluno que investiga, o professor que conduz a aula e a gestão que escolhe a ferramenta.</p>
+    </div>
+    <div class="aud-grid">
+      <div class="aud main reveal">
+        <span class="role-k">Quem usa</span>
+        <h3>Estudantes do ensino médio</h3>
+        <p>Adolescentes de 14 a 18 anos que ouvem falar de mudança climática, mas nunca viram a evidência com os próprios olhos.</p>
+        <ul>
+          <li>Aprendem investigando, não decorando</li>
+          <li>Desenvolvem leitura de dados e pensamento estatístico</li>
+          <li>Ganham senso crítico contra desinformação</li>
+        </ul>
+      </div>
+      <div class="aud reveal">
+        <span class="role-k">Quem aplica</span>
+        <h3>Professores</h3>
+        <p>De Ciências da Natureza, Geografia, Matemática e tecnologia, que precisam de atividades com dados reais sem horas de preparação.</p>
+        <ul>
+          <li>Modo projetor pronto para a aula</li>
+          <li>Funciona sem celular, com cartões de votação</li>
+          <li>Conecta com projetos sobre os ODS</li>
+        </ul>
+      </div>
+      <div class="aud reveal">
+        <span class="role-k">Quem decide</span>
+        <h3>Gestores e redes de ensino</h3>
+        <p>Direções de escolas públicas e privadas e secretarias de educação que buscam aprendizagem ativa e inovação com baixo custo.</p>
+        <ul>
+          <li>Roda no computador e projetor que a escola já tem</li>
+          <li>Indicadores de engajamento e interpretação de dados</li>
+          <li>Escala de uma turma para a rede inteira</li>
+        </ul>
+      </div>
+    </div>
+    <div class="channels reveal">
+      <b>Canais de entrada</b>
+      <span>Escolas públicas</span><span>Escolas privadas e redes</span><span>Secretarias de educação</span><span>Editoras e plataformas didáticas</span><span>ONGs e institutos de educação climática</span>
+    </div>
+  </div>
+</section>
+
+<!-- ================= VALIDAÇÃO ================= -->
+<section class="validation" id="validacao">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Validação</span>
+      <h2>Quem está na escola <span class="grad-text">aprovou</span></h2>
+      <p>Apresentamos o protótipo para gestoras de escolas pública e privada.</p>
+    </div>
+    <div class="val-grid">
+      <div class="interview reveal">
+        <img src="assets/entrevista-diretora.jpg" alt="Videochamada da equipe do E.V.A com a diretora Sandra Miranda durante a apresentação do protótipo">
+        <span class="badge">Entrevista de validação</span>
+      </div>
+      <div class="quote-card reveal">
+        <div>
+          <div class="qmark">“</div>
+          <blockquote>É importante trazer a NASA, que é algo muito distante, para perto dos alunos.</blockquote>
+        </div>
+        <div class="person">
+          <img src="assets/diretora-retrato.jpg" alt="Retrato de Sandra Miranda">
+          <div>
+            <strong>Sandra Miranda</strong>
+            <span>Diretora · Escola Prof. Paulina Gaya</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="val-milena reveal">
+      <div style="display:flex;flex-direction:column;justify-content:space-between">
+        <div>
+          <span class="k">Validação por escrito</span>
+          <blockquote>“Poder investigar um fenômeno real, escolher um lugar do planeta, levantar hipóteses e confrontá-las com dados científicos pode ser muito envolvente para os adolescentes.”</blockquote>
+        </div>
+        <div class="person">
+          <img src="assets/milena.jpg" alt="Retrato de Milena">
+          <div><strong>Milena</strong><span>Gestora · Happy Balneário Camboriú</span></div>
+        </div>
+      </div>
+      <div class="highlights">
+        <div class="hl"><span class="tag2"><i></i>Problema confirmado</span><p>“Não temos hoje um caminho estruturado para localizar, interpretar e transformar esses dados em atividades pedagógicas.”</p></div>
+        <div class="hl"><span class="tag2"><i></i>Interesse em piloto</span><p>“Teria interesse em conhecer uma versão testável e avaliar a possibilidade de um piloto com uma turma.”</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MATERIAIS ================= -->
+<section class="materials" id="materiais">
+  <div class="wrap">
+    <!-- EDITAR: quando o vídeo estiver no YouTube, cole o link em data-youtube
+         (ex.: data-youtube="https://www.youtube.com/watch?v=XXXXXXXXXXX" ou https://youtu.be/XXXXXXXXXXX) -->
+    <div class="yt reveal" id="video" data-youtube="">
+      <div class="yt-ph">
+        <div class="play"><svg viewBox="0 0 24 24" fill="#1a1206"><path d="M7 4.5l13 7.5-13 7.5z"/></svg></div>
+        <strong>Vídeo demonstrativo</strong>
+        <span>Em breve no YouTube</span>
+      </div>
+    </div>
+    <div class="sec-head reveal" style="margin-bottom:32px">
+      <h2>Documentos do projeto</h2>
+    </div>
+    <!-- EDITAR: coloque os arquivos na pasta landing/docs/ com estes nomes (ou troque os href) -->
+    <div class="mat-list cols">
+      <a class="mat reveal" href="docs/apresentacao-eva.pdf" download><span class="fi" style="background:#e3a948;color:#1a1206">PPT</span><div><h4>Apresentação</h4><p>Pitch completo do projeto</p></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5l5 5 5-5M5 20h14"/></svg></span></a>
+      <a class="mat reveal" href="docs/modelo-de-negocio-eva.pdf" download><span class="fi" style="background:#b8612f">BMC</span><div><h4>Modelo de negócio</h4><p>Canvas, público, receitas e custos</p></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5l5 5 5-5M5 20h14"/></svg></span></a>
+      <a class="mat reveal" href="docs/documento-projeto-eva.pdf" download><span class="fi" style="background:#5b6b8c">PDF</span><div><h4>Documento do projeto</h4><p>Proposta, metodologia e resultados</p></div><span class="go"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m-5-5l5 5 5-5M5 20h14"/></svg></span></a>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EQUIPE ================= -->
+<section id="equipe">
+  <div class="wrap">
+    <div class="sec-head center reveal">
+      <span class="eyebrow">Equipe</span>
+      <h2>Quem está por trás do <span class="grad-text">E.V.A</span></h2>
+      <p>Quatro autores unindo ciência de dados, educação e design.</p>
+    </div>
+    <!-- EDITAR: coloque as fotos em assets/autor-1.jpg ... autor-4.jpg (quadradas) e preencha nomes/papéis -->
+    <div class="team-grid">
+      <div class="member reveal">
+        <div class="avatar"><div class="ph"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>assets/autor-1.jpg</div></div><img src="assets/autor-1.jpg" alt="Autor 1" onerror="this.remove()"></div>
+        <h3>Nome do Autor 1</h3><div class="role">Função no projeto</div><p>Uma linha sobre formação e contribuição.</p>
+        <div class="socials"><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a><a href="#" aria-label="E-mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+      </div>
+      <div class="member reveal">
+        <div class="avatar"><div class="ph"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>assets/autor-2.jpg</div></div><img src="assets/autor-2.jpg" alt="Autor 2" onerror="this.remove()"></div>
+        <h3>Nome do Autor 2</h3><div class="role">Função no projeto</div><p>Uma linha sobre formação e contribuição.</p>
+        <div class="socials"><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a><a href="#" aria-label="E-mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+      </div>
+      <div class="member reveal">
+        <div class="avatar"><div class="ph"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>assets/autor-3.jpg</div></div><img src="assets/autor-3.jpg" alt="Autor 3" onerror="this.remove()"></div>
+        <h3>Nome do Autor 3</h3><div class="role">Função no projeto</div><p>Uma linha sobre formação e contribuição.</p>
+        <div class="socials"><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a><a href="#" aria-label="E-mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+      </div>
+      <div class="member reveal">
+        <div class="avatar"><div class="ph"><div><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>assets/autor-4.jpg</div></div><img src="assets/autor-4.jpg" alt="Autor 4" onerror="this.remove()"></div>
+        <h3>Nome do Autor 4</h3><div class="role">Função no projeto</div><p>Uma linha sobre formação e contribuição.</p>
+        <div class="socials"><a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5zM3 9h4v12H3zM9 9h3.8v1.7h.1c.5-1 1.8-2 3.8-2 4 0 4.8 2.6 4.8 6V21h-4v-5.5c0-1.3 0-3-1.9-3s-2.1 1.4-2.1 2.9V21H9z"/></svg></a><a href="#" aria-label="E-mail"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= DRIVE ================= -->
+<section class="drive" id="drive">
+  <div class="wrap">
+    <div class="drive-box reveal">
+      <div>
+        <span class="eyebrow">Drive do projeto</span>
+        <h2>Tudo do projeto em um só lugar</h2>
+        <p>No nosso Drive você encontra todos os dados oficiais utilizados no projeto.</p>
+        <a class="btn btn-primary" href="https://drive.google.com/drive/u/2/folders/1assPWxWg7m0SatUudmoIxkNvh6jZY6Td" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+          Abrir o Drive do projeto</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div class="wrap">
+    <div>
+      <a href="#topo" class="logo" style="margin-bottom:14px"><span class="logo-mark"><span></span></span>E.V.A</a>
+      <p style="max-width:360px">Pergunte ao planeta. Dados de satélite da NASA, estatística de verdade e explicações simples para quem vai herdar o planeta.</p>
+    </div>
+    <div><h5>Projeto</h5><ul><li><a href="#como-funciona">Como funciona</a></li><li><a href="#rigor">Rigor científico</a></li><li><a href="#mexa">Mexa no Planeta</a></li><li><a href="#validacao">Validação</a></li></ul></div>
+    <div><h5>Recursos</h5><ul><li><a href="#materiais">Documentos</a></li><li><a href="#publico">Público-alvo</a></li><li><a href="#equipe">Equipe</a></li><li><a href="#drive">Drive do projeto</a></li><!-- EDITAR: e-mail de contato --><li><a href="mailto:contato@exemplo.com">Contato</a></li></ul></div>
+  </div>
+  <div class="foot-bottom"><span>© 2026 E.V.A · Protótipo educacional</span><span>Dados fornecidos pela NASA. O E.V.A não é afiliado nem endossado pela NASA.</span></div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/globe.gl@2.32.0/dist/globe.gl.min.js"></script>
+<script>
+/* ---------- nav ---------- */
+const nav=document.getElementById('nav');
+addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+
+/* ---------- reveal ---------- */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach((el,i)=>{el.style.transitionDelay=(i%4)*80+'ms';io.observe(el)});
+
+/* ---------- stars ---------- */
+(()=>{const c=document.getElementById('stars'),x=c.getContext('2d');let s=[],w,h;
+function rs(){w=c.width=c.offsetWidth*devicePixelRatio;h=c.height=c.offsetHeight*devicePixelRatio;s=Array.from({length:180},()=>({x:Math.random()*w,y:Math.random()*h,r:Math.random()*1.3*devicePixelRatio,p:Math.random()*6}))}
+rs();addEventListener('resize',rs);
+(function d(t){x.clearRect(0,0,w,h);for(const a of s){x.globalAlpha=.25+.55*Math.abs(Math.sin(t/1400+a.p));x.fillStyle='#fff';x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fill()}requestAnimationFrame(d)})(0)})();
+
+/* ---------- globo 3D (globe.gl + Blue Marble) ---------- */
+(()=>{const el=document.getElementById('globe');if(!window.Globe){el.innerHTML='';return}
+ const TEX='https://cdn.jsdelivr.net/npm/three-globe@2.31.0/example/img/';
+ const spots=[{lat:-3.5,lng:-62,n:'Amazônia'},{lat:-17.5,lng:-57,n:'Pantanal'},{lat:-8,lng:-39,n:'Nordeste'},{lat:-15.8,lng:-47.9,n:'Cerrado'}];
+ const g=Globe()(el)
+  .backgroundColor('rgba(0,0,0,0)')
+  .globeImageUrl(TEX+'earth-blue-marble.jpg')
+  .bumpImageUrl(TEX+'earth-topology.png')
+  .showAtmosphere(true).atmosphereColor('#9cc3ff').atmosphereAltitude(.2)
+  .ringsData(spots).ringColor(()=>t=>`rgba(240,184,90,${1-t})`).ringMaxRadius(4.5).ringPropagationSpeed(2).ringRepeatPeriod(1400)
+  .pointsData(spots).pointColor(()=>'#f0b85a').pointAltitude(.01).pointRadius(.45);
+ const size=()=>{const w=el.clientWidth;g.width(w).height(w)};size();addEventListener('resize',size);
+ g.pointOfView({lat:-12,lng:-50,altitude:2.1},0);
+ const c=g.controls();c.autoRotate=true;c.autoRotateSpeed=.55;c.enableZoom=false;c.enablePan=false;
+ let t;el.addEventListener('pointerdown',()=>{c.autoRotate=false;clearTimeout(t)});
+ el.addEventListener('pointerup',()=>{t=setTimeout(()=>c.autoRotate=true,2500)});
+ if(matchMedia('(pointer:coarse)').matches)el.style.pointerEvents='none';
+})();
+
+/* ---------- Mexa no Planeta (ilustrativo) ---------- */
+const SIM={
+ vulcao:{t:'🌋 Erupção vulcânica',s:'Aerossóis refletem a luz do Sol. O que os satélites viram depois de grandes erupções:',r:[
+  {l:'Temperatura global',v:'−0,4 °C',c:'down',w:55},{l:'Aerossóis na estratosfera',v:'+ forte',c:'up',w:90},
+  {l:'Chuva nos trópicos',v:'menor',c:'down',w:40},{l:'Ozônio sobre a Antártida',v:'sem dado',c:'na',w:0}]},
+ floresta:{t:'🌳 Desmatamento',s:'Menos árvores, menos água devolvida ao ar. Efeitos opostos perto e longe:',r:[
+  {l:'Temperatura local',v:'+1,1 °C',c:'up',w:75},{l:'Vegetação (NDVI)',v:'−32%',c:'down',w:68},
+  {l:'Chuva na região',v:'−8%',c:'down',w:35},{l:'Chuva a centenas de km',v:'pode subir',c:'up',w:22}]},
+ cidade:{t:'🏙️ Cidade desligada',s:'Quando cidades pararam de verdade, o ar mudou em semanas:',r:[
+  {l:'NO₂ no centro',v:'−40%',c:'down',w:70},{l:'Ilha de calor',v:'−0,5 °C',c:'down',w:30},
+  {l:'Ozônio ao redor',v:'+ leve',c:'up',w:25},{l:'Cidade sem cobertura',v:'sem dado',c:'na',w:0}]}};
+function renderSim(k){const d=SIM[k];simTitle.textContent=d.t;simSub.textContent=d.s;
+ simRegions.innerHTML=d.r.map(r=>`<div class="region"><div class="lbl">${r.l}</div><div class="val ${r.c}">${r.v}</div><div class="bar"><i style="width:0;background:${r.c==='up'?'var(--heat)':'linear-gradient(90deg,#d4893a,#8fb3e0)'}"></i></div></div>`).join('');
+ requestAnimationFrame(()=>requestAnimationFrame(()=>simRegions.querySelectorAll('.bar i').forEach((b,i)=>b.style.width=d.r[i].w+'%')))}
+document.querySelectorAll('.laser').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.laser').forEach(o=>o.classList.remove('active'));b.classList.add('active');renderSim(b.dataset.k)}));
+renderSim('vulcao');
+
+/* ---------- vídeo do YouTube (preencha data-youtube no #video) ---------- */
+(()=>{const box=document.getElementById('video');const url=(box.dataset.youtube||'').trim();if(!url)return;
+ const m=url.match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([\w-]{11})/)||url.match(/^([\w-]{11})$/);if(!m)return;
+ box.innerHTML=`<iframe src="https://www.youtube-nocookie.com/embed/${m[1]}?rel=0" title="Vídeo demonstrativo do E.V.A" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>`})();
+</script>
+<script src="i18n.js"></script>
+</body>
+</html>
